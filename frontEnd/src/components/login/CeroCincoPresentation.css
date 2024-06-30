@@ -1,0 +1,30 @@
+.presentation-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--primary);
+}
+
+.small-logo-presentation{
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  height: 45px;
+  width: 45px;
+}
+
+.complete-logo-presentation{
+  height: 85px;
+  width: 450px;
+  margin: 0;
+}
+
+.presentation-text{
+  margin: 0;
+  color: var(--primary-contrast);
+  font-size: 40px;
+  font-weight: 600;
+}

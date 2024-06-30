@@ -1,0 +1,33 @@
+.login-form-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--white);
+}
+
+.login-form-content-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-title{
+  text-align: left;
+  color: var(--secondary);
+  margin-bottom: 45px;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.login-form-button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

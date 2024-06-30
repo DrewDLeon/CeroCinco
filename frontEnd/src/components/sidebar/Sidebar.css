@@ -1,0 +1,45 @@
+.sidebar {
+  position: fixed;
+  top: 120px; /* Adjust based on header height */
+  left: 0;
+  width: 280px;
+  height: calc(100% - 120px); /* Adjust based on header height */
+  background-color: var(--white);
+  overflow-x: hidden;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adding a subtle lateral shadow */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-list-item-container {
+  display: flex;
+  height: fit-content;
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: var(--white); /* Add background color to make it look like a box */
+  transition: border 0.3s;
+}
+
+.sidebar-list-item-container a {
+  text-decoration: none;
+  color: black;
+  padding: 8px 16px;
+  width: 100%; /* Make the link take the full width of the container */
+  height: 75px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-list-item-container a.active {
+  border-right: 5px solid var(--secondary); /* Border for active link */
+  box-shadow: 0 10px 30px rgba(48, 239, 166, 0.3); /* Optional shadow for better visual indication */
+  color: var(--secondary);
+  font-family: 'Cocogoose Pro', Inter;
+  font-size: 25px;
+  font-weight: 900;
+  border-radius: 5px;
+}

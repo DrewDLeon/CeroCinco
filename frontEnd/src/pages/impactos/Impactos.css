@@ -1,0 +1,132 @@
+.visualizador-impactos-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.visualizador-impactos-seleccion-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 350px;
+  height: 100%;
+  /* height: fit-content; */
+  margin-right: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.visualizador-impactos-seleccion-container {
+  /* flex: 1; */
+}
+
+.panel-dropdown {
+  width: 100%;
+  padding: 10px;
+  font-size: 17px;
+}
+
+.visualizador-impactos-info-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.visualizador-impactos-info-image {
+  width: 260px;
+  height: 260px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.visualizador-impactos-info-container p {
+  margin: 5px 0;
+  color: var(--primary);
+}
+
+.visulizador-impactos-data-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.visualizador-impactos-kpi-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 30px;
+}
+
+.kpi-item {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  flex: 1;
+  /* margin: 0 25px; */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.kpi-title {
+  color: var(--white);
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.kpi-value {
+  color: var(--white);
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.visualizador-impactos-graph-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.visualizador-impactos-selection-graph-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.graph-container{
+  height: 100%;
+}
+
+.visualizador-impactos-selection-button{
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+  border: 1px solid var(--primary);
+  border-radius: 0;
+  padding: 5px;
+  margin: 0 0px 10px 10px;
+  border-radius: 5px;
+  color: var(--primary);
+}
+.visualizador-impactos-selection-button:hover, .visualizador-impactos-selection-button-active{
+  background-color: var(--primary);
+  color: var(--white);
+}
+
+.data-collection-legend{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  color: var(--primary);
+}
