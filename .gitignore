@@ -4,6 +4,9 @@ node_modules/
 # Environment variables
 .env
 
+# Certificados SSL
+backend/config/certs/
+
 # Logs
 logs/
 *.log
