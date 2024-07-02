@@ -72,44 +72,42 @@ function Impactos() {
 
   const startDate = twoMonthsAgo.toISOString().replace('T', ' ').substring(0, 19);
   const endDate = currentDate.toISOString().replace('T', ' ').substring(0, 19);
-  console.log(startDate, endDate);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let url;
-        if (activeButton === "hourly") {
-          url = `http://localhost:5000/api/panels/hourly-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
-        } else if (activeButton === "daily") {
-          url = `http://localhost:5000/api/panels/daily-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
-        }
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       let url;
+  //       if (activeButton === "hourly") {
+  //         url = `http://localhost:5000/api/panels/hourly-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
+  //       } else if (activeButton === "daily") {
+  //         url = `http://localhost:5000/api/panels/daily-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
+  //       }
         
-        const response = await fetch(url);
-        const data = await response.json();
-        setPanelData(data.body.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //       const response = await fetch(url);
+  //       const data = await response.json();
+  //       setPanelData(data.body.data);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    const fetchKpiData = async () => {
-      try {
-        const url = `http://localhost:5000/api/panels/kpi-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setKpiData(data);
-      } catch (error) {
-        console.error('Error fetching KPI data:', error);
-      }
-    };
+  //   const fetchKpiData = async () => {
+  //     try {
+  //       const url = `http://localhost:5000/api/panels/kpi-data/${pantallaSeleccionada.id}?start_date=${startDate}&end_date=${endDate}`;
+  //       const response = await fetch(url);
+  //       const data = await response.json();
+  //       setKpiData(data);
+  //     } catch (error) {
+  //       console.error('Error fetching KPI data:', error);
+  //     }
+  //   };
 
-    fetchData();
-    fetchKpiData();
-  }, [pantallaSeleccionada, activeButton]);
+  //   fetchData();
+  //   fetchKpiData();
+  // }, [pantallaSeleccionada, activeButton]);
 
   return (
     <>
-      {/* <h2>Impactos</h2> */}
       <div className="visualizador-impactos-container">
         <div className="visualizador-impactos-seleccion-info-container">
           <div className="visualizador-impactos-seleccion-container">
@@ -124,7 +122,6 @@ function Impactos() {
             </select>
           </div>
           <div className="visualizador-impactos-info-container">
-            {/* <h3>{pantallaSeleccionada.name}</h3> */}
             <img 
               src={pantallaSeleccionada.image} 
               alt={pantallaSeleccionada.name} 

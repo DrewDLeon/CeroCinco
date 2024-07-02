@@ -5,21 +5,21 @@ import './MisCampañas.css';
 function MisCampañas() {
   const [customerPanels, setCustomerPanels] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch customer panels
-        let response = await fetch('http://localhost:5000/api/panels/56');
-        let data = await response.json();
-        setCustomerPanels(data.body.panels);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Fetch customer panels
+  //       let response = await fetch('http://localhost:5000/api/panels/56');
+  //       let data = await response.json();
+  //       setCustomerPanels(data.body.panels);
 
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []); 
+  //   fetchData();
+  // }, []); 
 
   const testingData = [
     {
@@ -45,16 +45,16 @@ function MisCampañas() {
     <div>
       <h2 >Bienvenido "Nombre de usuario"</h2>
       <h3>Mis Campañas</h3>
-      <div className='campañas-container'>
+      {/* <div className='campañas-container'>
         {customerPanels.map((panel) => (
           <CampañaCard key={panel.id} props={panel} />
         ))}
-      </div>
-      {/* <div className='campañas-container'>
+      </div> */}
+      <div className='campañas-container'>
         {testingData.map((panel) => (
           <CampañaCard key={panel.id} props={panel} />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
