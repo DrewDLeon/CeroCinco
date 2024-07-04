@@ -37,6 +37,11 @@ function MisCampañas() {
       name: 'Campaña 3',
       description: 'Campaña de prueba',
     },
+    {
+      id: 411,
+      name: 'Campaña 3',
+      description: 'Campaña de prueba',
+    },
   ];
 
   console.log(customerPanels);
