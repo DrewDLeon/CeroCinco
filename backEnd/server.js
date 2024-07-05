@@ -5,6 +5,8 @@ const cors = require('cors');
 const db = require('./config/db');
 const config = require('./config/config');
 const authRoutes = require('./routes/authRoutes');
+const pantallasRoutes = require('./routes/pantallasRoutes');
+const impactosRoutes = require('./routes/impactosRoutes');
 
 // Crear instancia de la aplicación Express
 const app = express();
@@ -23,6 +25,9 @@ app.use('/api/auth', authRoutes);
 // app.get('/api/admin/dashboard', authMiddleware, adminMiddleware, (req, res) => {
 //   res.json({ message: 'Bienvenido al dashboard de administrador' });
 // });
+
+app.use('/api/pantallas', pantallasRoutes);
+app.use('/api/impactos', impactosRoutes);
 
 // Conectar a la base de datos y manejar errores
 db.getConnection()

@@ -19,7 +19,6 @@ const authController = {
       }
 
       const token = jwt.sign({ id: user.id_usuario, admin: user.admin }, config.JWT_SECRET, { expiresIn: '1h' });
-      console.log(user);
 
       res.json({ token, admin: user.admin });
     } catch (error) {

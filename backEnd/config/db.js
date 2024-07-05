@@ -12,6 +12,7 @@ const pool = mysql.createPool({
   user: config.DB_USER,
   password: config.DB_PASSWORD,
   database: config.DB_NAME,
+  timezone: 'Z', // Time zone UTC para estandarizar las fechas
   ssl: sslOptions
 });
 

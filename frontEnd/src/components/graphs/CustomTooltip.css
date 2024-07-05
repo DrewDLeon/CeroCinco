@@ -1,0 +1,14 @@
+.custom-tooltip {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.custom-tooltip .label {
+  font-weight: bold;
+}
+
+.custom-tooltip .intro {
+  margin-top: 5px;
+}
