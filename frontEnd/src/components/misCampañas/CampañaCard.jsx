@@ -31,24 +31,25 @@ function CampañaCard({props}) {
   }
 
   return (
-    <div className='campaña-card-container' onClick={handeClick}>
-      <div className='campaña-card-image-container'>
-        <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
+    <>
+    <div className='campaña-card-component-shape'>
+      <div className='campaña-card-container' onClick={handeClick}>
+        <div className='campaña-card-image-container'>
+          <div className='campaña-card-panel-data'>
+            <p className='campaña-card-panel-date'>1/1/2024</p>
+          </div>
+          <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
+        </div>
       </div>
+
       <div className='campaña-card-panel-description-and-data-container'>
         <div className='campaña-card-panel-description'>
           <p className='campaña-card-panel-name'>{props.name}</p>
           <p className='campaña-card-panel-description'>{props.description}</p>
         </div>
-        <div className='campaña-card-panel-data'>
-          <p className='campaña-card-panel-date'>1/1/2024</p>
-          <div className='campaña-card-panel-number-views-container'>
-            <img src={VisualizationImage} alt="imagen visualización" className='campaña-card-visualization-image'/>
-            <p className='campaña-card-panel-number-visualizations'>9,999,999</p>
-          </div>
-        </div>
       </div>
     </div>
+    </>
   );s
 }
 

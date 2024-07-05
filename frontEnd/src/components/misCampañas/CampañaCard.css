@@ -1,19 +1,19 @@
 .campaña-card-container{
   display: flex;
   flex-direction: column;
-  width: 290px;
-  height: 456px;
+  width: 230px;
+  height: 350px;
   padding: 0;
   align-items: center;
   justify-content: center;
   border-radius: 30px;
-  box-shadow: 0px 10px 30px 0px rgba(48, 239, 166, 0.3);
+  box-shadow: 0px 10px 30px 0px rgba(150, 150, 150, 0.3);
   background-color: var(--white);
-  transition: transform 0.3s ease-in-out
+  transition: box-shadow 0.5s ease-in-out
 }
 
 .campaña-card-container:hover {
-  transform: scale(1.02);
+  box-shadow: 0px 10px 30px 0px rgba(174, 245, 111, 0.5);
   cursor: pointer;
 }
 
@@ -22,19 +22,25 @@
   height: 100%;
   border-radius: 20px;
   overflow: hidden;
+  position: relative;
 }
 
 .campaña-panel-image{
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .campaña-card-panel-description-and-data-container{
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  width: 100%;
+  width: 250px;
+  overflow: hidden; /* Hide overflowed text */
+  text-overflow: ellipsis; /* Add ellipsis (...) */
+  max-height: 100px; /* Adjust the maximum width as needed */
 }
 
 .campaña-card-panel-description{
@@ -56,12 +62,15 @@
 
 .campaña-card-panel-data{
   display: flex;
+  position: absolute;
   flex-direction: column;
   align-items: end;
+  bottom: 10px;
+  right: 10px;
 }
 
 .campaña-card-panel-date{
-  color: #686868;
+  color: #ffffff;
   font-size: 25px;
   font-weight: 500;
 }
