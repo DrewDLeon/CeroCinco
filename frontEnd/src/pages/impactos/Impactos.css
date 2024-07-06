@@ -25,6 +25,8 @@
   width: 100%;
   padding: 10px;
   font-size: 17px;
+  border: none;
+  border-radius: 10px;
 }
 
 .visualizador-impactos-info-container {
@@ -45,8 +47,9 @@
 
 .visualizador-impactos-info-container p {
   margin: 5px 0;
-  color: var(--primary);
+  /*color: var(--primary);*/
 }
+
 
 .visulizador-impactos-data-container{
   display: flex;
@@ -65,7 +68,8 @@
 }
 
 .kpi-item {
-  background-color: var(--primary);
+  /*background-color: var(--primary);*/
+  
   color: var(--white);
   padding: 20px;
   border-radius: 10px;
@@ -76,16 +80,16 @@
 }
 
 .kpi-title {
-  color: var(--white);
+  color: var(--primary);
   font-size: 20px;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .kpi-value {
-  color: var(--white);
-  font-size: 25px;
-  font-weight: bold;
+  color: var(--black);
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .visualizador-impactos-graph-container{
@@ -108,10 +112,10 @@
 }
 
 .visualizador-impactos-selection-button{
-  width: 100px;
-  height: 50px;
-  font-size: 20px;
-  border: 1px solid var(--primary);
+  width: 80px;
+  height: 40px;
+  font-size: 15px;
+  border: 2px solid var(--primary);
   border-radius: 0;
   padding: 5px;
   margin: 0 0px 10px 10px;
@@ -129,4 +133,12 @@
   justify-content: end;
   align-items: center;
   color: var(--primary);
+}
+
+.tittle-visualisador-de-impactos-info-container{
+  color: var(--primary);
+}
+
+.subtittle-visualisador-de-impactos-info-container{
+  color: var(--black);
 }

@@ -197,10 +197,10 @@ function Impactos() {
               alt={pantallaSeleccionada.name} 
               className="visualizador-impactos-info-image"
             />
-            <p><b>Dirección: </b></p>
-            <p>{pantallaSeleccionada.direccion_pantalla}</p>
-            <p><b>Horario: </b></p>
-            <p>{scheduleFormated(pantallaSeleccionada.hora_inicio, pantallaSeleccionada.hora_fin)}</p>
+            <p className="tittle-visualisador-de-impactos-info-container"><b>Dirección: </b></p>
+            <p className="subtittle-visualisador-de-impactos-info-container">{pantallaSeleccionada.direccion_pantalla}</p>
+            <p className="tittle-visualisador-de-impactos-info-container"><b>Horario: </b></p>
+            <p className="subtittle-visualisador-de-impactos-info-container">{scheduleFormated(pantallaSeleccionada.hora_inicio, pantallaSeleccionada.hora_fin)}</p>
           </div>
         </div>
         <div className="visulizador-impactos-data-container">
