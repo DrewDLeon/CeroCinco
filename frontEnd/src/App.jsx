@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
 import Login from './pages/login/Login';
 import MisCampañas from './pages/misCampañas/MisCampañas';
@@ -8,6 +8,17 @@ import CrearCampaña from './pages/crearCampaña/CrearCampaña';
 import Admin from './pages/adminPruebas/admin';
 import './App.css';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+
+const RedirectBasedOnRole = () => {
+  const token = localStorage.getItem('token');
+  const isAdmin = localStorage.getItem('admin') === '1';
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/miscampañas" replace />;
+};
 
 function App() {
   return (
@@ -36,7 +47,7 @@ function App() {
           }
         />
         <Route
-          path="/Impactos"
+          path="/impactos"
           element={
             <PrivateRoute>
               <MainLayout>
@@ -54,6 +65,11 @@ function App() {
               </MainLayout>
             </PrivateRoute>
           }
+        />
+        {/* Ruta catch-all para redirigir según el rol */}
+        <Route
+          path="*"
+          element={<RedirectBasedOnRole />}
         />
       </Routes>
     </Router>

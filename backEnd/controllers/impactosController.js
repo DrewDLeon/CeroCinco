@@ -110,42 +110,44 @@ const impactosController = {
   },
 
   getDailyData: async (req, res) => {
-    const {idPantalla, beginDate, endDate, startHour, endHour} = req.body;
-    
-    data = await tbl_impactos.getImpactosFrom(idPantalla, beginDate, endDate, startHour, endHour);
-
-    const dailyTotalDict = {};
-    const dailyNumElements = {};
-    const usedDates = new Set();
-
-    data.forEach((element) => {
-      const day = element.fechayhora.getUTCDay();
-      const date = element.fechayhora.getUTCDate();
-
-      if (!dailyTotalDict[day]) {
-        dailyTotalDict[day] = 0;
+      const {idPantalla, beginDate, endDate, startHour, endHour} = req.body;
+      
+      data = await tbl_impactos.getImpactosFrom(idPantalla, beginDate, endDate, startHour, endHour);
+  
+      const dailyTotalDict = {};
+      const dailyNumElements = {};
+      const usedDates = new Set();
+  
+      data.forEach((element) => {
+        const day = element.fechayhora.getUTCDay();
+        // Corrección aquí: incluir año, mes y día en la clave
+        const dateKey = element.fechayhora.toISOString().split('T')[0]; // Formato 'YYYY-MM-DD'
+  
+        if (!dailyTotalDict[day]) {
+          dailyTotalDict[day] = 0;
+        }
+  
+        if (!dailyNumElements[day]) {
+          dailyNumElements[day] = 0;
+        }
+  
+        // Usar dateKey para verificar si la fecha ha sido usada
+        if (!usedDates.has(dateKey)) {
+          usedDates.add(dateKey);
+          dailyNumElements[day] += 1;
+        }
+  
+        dailyTotalDict[day] += element.total_impactos;
+      });
+  
+      const dailyAverageDict = {};
+  
+      for (const [day, totalImpactos] of Object.entries(dailyTotalDict)) {
+        dailyAverageDict[day] = totalImpactos / dailyNumElements[day];
       }
-
-      if (!dailyNumElements[day]) {
-        dailyNumElements[day] = 0;
-      }
-
-      if (!usedDates.has(date)) {
-        usedDates.add(date);
-        dailyNumElements[day] += 1;
-      }
-
-      dailyTotalDict[day] += element.total_impactos;
-    });
-
-    const dailyAverageDict = {};
-
-    for (const [day, totalImpactos] of Object.entries(dailyTotalDict)) {
-      dailyAverageDict[day] = totalImpactos / dailyNumElements[day];
-    }
-
-    res.json(dailyAverageDict);
-  },
+  
+      res.json(dailyAverageDict);
+    },
 };
 
 module.exports = impactosController;
