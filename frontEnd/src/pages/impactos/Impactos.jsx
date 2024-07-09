@@ -133,7 +133,7 @@ function Impactos() {
             endHour: pantallaSeleccionada.hora_fin
           })
         });
-
+        
         const data = await response.json();
         setPanelData(data);
       } catch (error) {
@@ -240,7 +240,7 @@ function Impactos() {
                 <p>Cargando datos...</p>
               )}
             </div>
-            <p className="data-collection-legend">Datos recolectados desde {formatDateString(startDate)} hasta {formatDateString(endDate)}</p>
+            <p className="data-collection-legend">* Datos recolectados desde {formatDateString(startDate)} hasta {formatDateString(endDate)}</p>
           </div>
         </div>
       </div>

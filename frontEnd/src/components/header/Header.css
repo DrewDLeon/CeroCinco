@@ -4,16 +4,16 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 35px; /* Adding padding */
+  padding: 0 15px; /* Adding padding */
   position: fixed;
   top: 0;
   left: 0;
-  width: calc(100% - 70px); /* Adjust based on padding */
-  height: 120px;
+  width: calc(100% - 30px); /* Adjust based on padding */
+  height: 90px;
 }
 
 .header-logo-image{
-  height: 45px;
+  height: 35px;
 }
 
 .header-logo-image:hover{
@@ -28,9 +28,9 @@
 }
 
 .action-item{
-  width: 45px;
-  height: 45px;
-  margin: 0 0 0 35px;
+  width: 35px;
+  height: 35px;
+  margin: 0 0 0 15px;
 }
 
 .action-item:hover{

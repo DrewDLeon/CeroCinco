@@ -1,9 +1,9 @@
 .sidebar {
   position: fixed;
-  top: 120px; /* Adjust based on header height */
+  top: 90px; /* Adjust based on header height */
   left: 0;
-  width: 280px;
-  height: calc(100% - 120px); /* Adjust based on header height */
+  width: 250px;
+  height: calc(100% - 90px); /* Adjust based on header height */
   background-color: var(--white);
   overflow-x: hidden;
   padding-top: 20px;
@@ -40,6 +40,6 @@
   color: var(--secondary);
   font-family: 'Cocogoose Pro', Inter;
   font-size: 25px;
-  font-weight: 900;
+  font-weight: 700;
   border-radius: 5px;
 }

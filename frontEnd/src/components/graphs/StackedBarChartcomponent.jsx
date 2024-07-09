@@ -9,7 +9,6 @@ const transformData = (data) => {
   }));
 };
 
-
 const formatDataKey = (type) => {
   if (type === "hourly") {
     return "key";
@@ -46,7 +45,7 @@ const StackedBarChart = ({ data, type }) => {
           tickFormatter={(tick) => formatTick(tick, type)} 
         />
         <YAxis />
-        <Tooltip content={<CustomTooltip />}/>
+        <Tooltip content={<CustomTooltip type={type} />}/>
         <Bar dataKey="total" fill="#0D4B63" />
       </BarChart>
     </ResponsiveContainer>

@@ -133,6 +133,7 @@
   justify-content: end;
   align-items: center;
   color: var(--primary);
+  font-size: 15px;
 }
 
 .tittle-visualisador-de-impactos-info-container{

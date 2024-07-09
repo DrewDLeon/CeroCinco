@@ -6,12 +6,12 @@
 
 .main-layout-content {
   display: flex;
-  height: calc(100% - 120px); /* Adjust based on header height */
-  margin-top: 120px; /* Adjust based on header height */
+  height: calc(100% - 90px); /* Adjust based on header height */
+  margin-top: 90px; /* Adjust based on header height */
 }
 
 .content {
-  margin-left: 280px; /* Width of the sidebar */
+  margin-left: 250px; /* Width of the sidebar */
   padding: 40px;
   flex-grow: 1;
   overflow-y: auto;
