@@ -1,6 +1,65 @@
-.campañas-container{
-  margin-top: 20px;
+.container{
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.filters-and-headers-container {
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 35px;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--white);
+}
+
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-weight: bold;
+  font-size: 0.9em; /* Smaller font size */
+}
+
+.filter-textarea {
+  width: 100%;
+  height: 30px;
+  font-size: 0.9em; /* Smaller font size */
+}
+
+.buttons-container {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-button {
+  padding: 4px 8px; /* Smaller padding */
+  font-size: 0.9em; /* Smaller font size */
+  cursor: pointer;
+}
+
+.active-filter-button{
+  color: var(--white);
+  background-color: var(--secondary);
+  cursor: pointer;
+}
+
+.campañas-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 10px;
 }
