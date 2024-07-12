@@ -12,11 +12,11 @@ function CampanaModal({ isOpen, onClose, campana }) {
 
   let currentPanelPhoto;
 
-  if (campana.id_pantalla === 220) {
+  if (campana.id_pantalla === 1) {
     currentPanelPhoto = Panel220Photo;
-  } else if (campana.id_pantalla === 302) {
+  } else if (campana.id_pantalla === 2) {
     currentPanelPhoto = Panel302Photo;
-  } else if (campana.id_pantalla === 410) {
+  } else if (campana.id_pantalla === 3) {
     currentPanelPhoto = Panel410Photo;
   } else {
     currentPanelPhoto = Panel220Photo;
