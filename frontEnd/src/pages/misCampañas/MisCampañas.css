@@ -47,11 +47,20 @@
   padding: 4px 8px; /* Smaller padding */
   font-size: 0.9em; /* Smaller font size */
   cursor: pointer;
+  border-radius: 5px;
+  color: var(--primary);
+  border: solid 1px var(--primary);
+}
+
+.filter-button:hover{
+  color: var(--white);
+  background-color: var(--primary);
+  cursor: pointer;
 }
 
 .active-filter-button{
   color: var(--white);
-  background-color: var(--secondary);
+  background-color: var(--primary);
   cursor: pointer;
 }
 

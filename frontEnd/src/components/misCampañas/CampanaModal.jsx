@@ -114,11 +114,17 @@ function CampanaModal({ isOpen, onClose, campana }) {
           <div>
             <h2>{/*campana.nombre*/}Nombre de la campaña</h2>
             <p>Pantalla: {campana.nombre_pantalla}</p>
-            <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
-            <p>Dirección de Pantalla: {campana.direccion_pantalla}</p>
-            <p>Fecha de Inicio: {formatDate(campana.fecha_inicio)}</p>
-            <p>Fecha de Fin: {formatDate(campana.fecha_fin)}</p>
-            <p>Estado: {campana.estatus === 1 ? 'Activo' : 'En revisión'}</p>
+
+            <div className="modal-info">
+              <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
+              <div className="modal-text-data">
+                <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
+                <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
+                <p><b>Fecha de Fin:</b> {formatDate(campana.fecha_fin)}</p>
+                <p><b>Estado:</b> {campana.estatus === 1 ? 'Activo' : 'En revisión'}</p>
+              </div>
+            </div>
+
             <div className="schedule-table">
               <table {...getTableProps()} className="table">
                 <thead>
