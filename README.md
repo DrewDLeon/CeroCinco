@@ -1,7 +1,13 @@
 # CeroCinco
 
-##Guia developer
+## Screenshots
 
+![App Screenshot](<img width="1440" alt="Screenshot 2024-07-13 at 4 19 37" src="https://github.com/user-attachments/assets/c1433742-84cf-4ab9-8317-980cedf7137a">)
+![App Screenshot](<img width="1440" alt="Screenshot 2024-07-13 at 4 20 15" src="https://github.com/user-attachments/assets/4ccd2d08-cca5-4e35-95e4-bfffd7174ae1">)
+
+
+
+## Guia developer
 ### Set up del proyecto
 1. Descarga el repositorio Github
 2. Guarda el archivo .env que el administrador te proporciono end la carpeta backend
