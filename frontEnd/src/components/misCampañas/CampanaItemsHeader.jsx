@@ -17,7 +17,7 @@ function CampanaItemsHeader() {
         Fecha Fin
       </div>
       <div className="campana-header-cell">
-        Status
+        Estatus
       </div>
       <div className="campana-header-cell">
         Más Info

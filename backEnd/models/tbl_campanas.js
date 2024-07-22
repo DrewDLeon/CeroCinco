@@ -32,6 +32,7 @@ const tbl_campanas = {
 
     return rows;
   },
+  // ADMIN FUNCTIONS
   getCampanasAdmin: async function() {
     const query = `
       SELECT tc.id_campaña,
@@ -46,6 +47,24 @@ const tbl_campanas = {
 
     const [rows] = await db.query(query)
     return rows;
+  },
+  adminAprobarCampana: async function(campanaId) {
+    const query = `
+      UPDATE tbl_campanas 
+      SET  tc.estatus = 1
+      WHERE id_campana = ?;
+    `;
+
+    const [rows] = await db.query(query, [campanaId])
+  },
+  adminRechazarCampana: async function(campanaId) {
+    const query = `
+      UPDATE tbl_campanas 
+      SET  tc.estatus = 2
+      WHERE id_campana = ?;
+    `;
+
+    const [rows] = await db.query(query, [campanaId])
   }
 };
 
