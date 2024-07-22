@@ -45,7 +45,7 @@ const formatDateString = (dateString) => {
 
 function Impactos() {
   const [pantallas, setPantallas] = useState([]);;
-  const [pantallaSeleccionada, setPantallaSeleccionada] = useState([pantallas[0]]);
+  const [pantallaSeleccionada, setPantallaSeleccionada] = useState([]);
   const [panelData, setPanelData] = useState([]);
   const [activeButton, setActiveButton] = useState("hourly");
   const [kpiData, setKpiData] = useState([]);

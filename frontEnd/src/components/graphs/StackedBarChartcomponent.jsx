@@ -3,10 +3,15 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import CustomTooltip from './CustomTooltip';
 
 const transformData = (data) => {
-  return Object.keys(data).map(key => ({
-    key: Number(key), // Convert key to number
-    total: data[key]
-  }));
+  let newData = Object.keys(data).map(key => ({
+                  key: Number(key), // Convert key to number
+                  total: data[key]
+                }))
+
+  const firstElement = newData.shift(); // Remove the first element
+  newData.push(firstElement); // Add it to the end
+
+  return newData;
 };
 
 const formatDataKey = (type) => {
@@ -25,7 +30,7 @@ const formatTick = (tick, type) => {
                    "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm", "9pm", "10pm", "11pm"];
     return hours[tick] || tick; // Ensure tick is within range
   } else if (type === "daily") {
-    const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    const days = ["Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
     return days[tick] || tick; // Ensure tick is within range
   }
 
