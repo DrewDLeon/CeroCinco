@@ -22,6 +22,7 @@ function LoginForm() {
       const data = await response.json();
 
       if (response.ok) {
+        console.log('token', data.token);
         localStorage.setItem('token', data.token);
         localStorage.setItem('admin', data.admin);
 
