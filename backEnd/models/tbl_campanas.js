@@ -17,6 +17,7 @@ const tbl_campanas = {
       select
           tbl_campanas.id_pantalla,
           tbl_campanas.id_campaña,
+          tbl_campanas.nombre_campaña,
           tbl_campanas.fecha_inicio,
           tbl_campanas.fecha_fin,
           tbl_campanas.weekdays,
