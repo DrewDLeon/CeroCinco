@@ -9,6 +9,7 @@ const pantallasRoutes = require('./routes/pantallasRoutes');
 const impactosRoutes = require('./routes/impactosRoutes');
 const misCampanasRoutes = require('./routes/misCampanasRoutes');
 const adminCampanasRoutes = require('./routes/adminCampanasRoutes'); 
+const crearCampanaRoutes = require('./routes/crearCampanaRoutes'); 
 
 // Crear instancia de la aplicación Express
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/pantallas', pantallasRoutes);
 app.use('/api/impactos', impactosRoutes);
 app.use('/api/campanas', misCampanasRoutes);
 app.use('/api/adminCampanas', adminCampanasRoutes);
+app.use('/api/crearCampana', crearCampanaRoutes);
 
 // Conectar a la base de datos y manejar errores
 db.getConnection()

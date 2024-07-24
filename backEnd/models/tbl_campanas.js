@@ -33,6 +33,24 @@ const tbl_campanas = {
 
     return rows;
   },
+  getDisponibilidadCampana: async function(fecha_inicio, fecha_fin, daysofweekArray, horasArray) {
+    const query = `
+      SELECT fecha, hora
+      FROM tbl_reservaciones
+      WHERE (fecha >= ? AND fecha <= ?)
+      AND DAYOFWEEK(fecha) IN (?)
+      AND hora IN (?)
+      GROUP BY fecha, hora
+      HAVING SUM(estatus) < 2;
+    `;
+
+    const params = [fecha_inicio, fecha_fin, [...daysofweekArray], [...horasArray]]
+
+    const [rows] = await db.query(query, params)
+    console.log(rows)
+    return rows;
+  },
+
   // ADMIN FUNCTIONS
   getCampanasAdmin: async function() {
     const query = `
