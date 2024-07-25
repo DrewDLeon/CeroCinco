@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import CrearCampañaCard from "../../components/crearCampañas/CrearCampañaCard";
 import CalendarComponent from "../../components/rangeCalendar/RangeCalendar"; 
-import CampanaSelection from "../../components/crearCampañas/CampanaSelection"
-import './CrearCampaña.css';
+import CampanaSelection from "../../components/crearCampanas/CampanaSelection"
+import './CrearCampana.css';
 
 // api_pantalla 220
 // direccion_pantalla "Av. Benito Juarez"

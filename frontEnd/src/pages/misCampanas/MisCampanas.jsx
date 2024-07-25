@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CampanaItem from '../../components/misCampañas/CampanaItem';
-import CampanaItemsHeader from '../../components/misCampañas/CampanaItemsHeader';
-import './MisCampañas.css';
+import CampanaItem from '../../components/misCampanas/CampanaItem';
+import CampanaItemsHeader from '../../components/misCampanas/CampanaItemsHeader';
+import './MisCampanas.css';
 
 function MisCampañas() {
   const [campanas, setCampanas] = useState([]);

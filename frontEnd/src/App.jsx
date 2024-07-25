@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from './layout/MainLayout';
 import Login from './pages/login/Login';
-import MisCampañas from './pages/misCampañas/MisCampañas';
+import MisCampanas from './pages/misCampanas/MisCampanas';
 import Impactos from './pages/impactos/Impactos';
-import CrearCampaña from './pages/crearCampaña/CrearCampaña';
+import CrearCampana from './pages/crearCampana/CrearCampana';
 import Admin from './pages/adminPruebas/admin';
 import './App.css';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
@@ -17,7 +17,7 @@ const RedirectBasedOnRole = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/miscampañas" replace />;
+  return isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/MisCampañas" replace />;
 };
 
 function App() {
@@ -27,21 +27,21 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/miscampañas"
+          path="/MisCampañas"
           element={
             <PrivateRoute>
               <MainLayout>
-                <MisCampañas />
+                <MisCampanas />
               </MainLayout>
             </PrivateRoute>
           }
         />
         <Route
-          path="/crearcampañas"
+          path="/CrearCampañas"
           element={
             <PrivateRoute>
               <MainLayout>
-                <CrearCampaña />
+                <CrearCampana />
               </MainLayout>
             </PrivateRoute>
           }
