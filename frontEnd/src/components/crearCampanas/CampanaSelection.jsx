@@ -4,15 +4,6 @@ import Panel302Photo from '../../assets/paneles/panel302.jpg';
 import Panel410Photo from '../../assets/paneles/panel410.jpg';
 import "./CampanaSelection.css"
 
-// api_pantalla 220
-// direccion_pantalla "Av. Benito Juarez"
-// duracion_pantalla 15
-// hora_fin "23:00:00"
-// hora_inicio "07:00:00"
-// id_pantalla 1
-// medidas_pantalla "480x720p"
-// nombre_pantalla "Centro"
-
 function scheduleFormated(horaInicio, horaFin) {
   if (horaInicio === undefined || horaFin === undefined) return ("Horario no disponible");
 
@@ -23,30 +14,7 @@ function scheduleFormated(horaInicio, horaFin) {
   return schedule;
 };
 
-function CampanaSelection() {
-  const [pantallasData, setPantallasData] = useState([]);
-  const [pantallaSeleccionada, setPantallaSeleccionada] = useState([]);
-
-  useEffect(() => {
-    const fetchPantallasData = async () => {
-      try{
-        const url = `http://localhost:3000/api/pantallas`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setPantallasData(data); 
-        setPantallaSeleccionada(data[0])
-      } catch (error) {
-        console.error('Errror fectching pantallas data', e);
-      }
-    };
-
-    fetchPantallasData();
-  }, []);
-
-  useEffect(() => {
-    setPantallaSeleccionada[pantallasData[0]];
-  }, [pantallasData]);
-
+function CampanaSelection({pantallas, pantallaSeleccionada, handlePantallaSelecionadaChange}) {
   let pantallaImage = Panel220Photo;
 
   if(pantallaSeleccionada.id_pantalla === 1) {
@@ -57,15 +25,15 @@ function CampanaSelection() {
     pantallaImage = Panel410Photo;
   }
 
-  console.log(pantallaSeleccionada);
+  console.log(pantallas);
   return(
     <>
     <div className='campana-selection-container'>
       <div className='campana-selection-select-container'>
         <select 
           className="panel-dropdown"
-          onChange={(e) => setPantallaSeleccionada(pantallasData.find(p => p.id_pantalla === parseInt(e.target.value)))}>
-          {pantallasData.map(pantalla => (
+          onChange={(e) => handlePantallaSelecionadaChange(pantallas.find(p => p.id_pantalla === parseInt(e.target.value)))}>
+          {pantallas.map(pantalla => (
             <option key={pantalla.id_pantalla} value={pantalla.id_pantalla}>
               {pantalla.nombre_pantalla}
             </option>

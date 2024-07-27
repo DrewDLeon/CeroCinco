@@ -1,0 +1,53 @@
+.rdrCalendarWrapper {
+  font-size: 17px;
+  width: 400px;
+}
+
+.rdrDateDisplayWrapper {
+  /* background-color: #f0f0f0; */
+}
+
+.rdrDateDisplay {
+  /* margin: 0.5em; */
+}
+
+.rdrDateDisplayItem {
+  /* border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 2px 0 rgba(35, 57, 66, 0.21); */
+}
+
+.rdrDateDisplayItem input {
+  font-size: 17px;
+  padding: 2px 4px;
+}
+
+.rdrMonthAndYearWrapper {
+  /* padding-top: 0.5em; */
+}
+
+.rdrMonthAndYearPickers select {
+  /* font-size: 1em; */
+}
+
+.rdrMonthName {
+  /* font-size: 1em;
+  text-align: center; */
+}
+
+.rdrWeekDays {
+  /* font-size: 0.8em; */
+}
+
+.rdrDay {
+  /* color: #333; */
+}
+
+.rdrDayNumber span {
+  /* font-size: 0.8em; */
+}
+
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+  background-color: #34db7a;
+  color: white;
+}
