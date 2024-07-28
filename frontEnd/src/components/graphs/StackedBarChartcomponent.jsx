@@ -2,15 +2,17 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import CustomTooltip from './CustomTooltip';
 
-const transformData = (data) => {
+const transformData = (data, type) => {
   let newData = Object.keys(data).map(key => ({
                   key: Number(key), // Convert key to number
                   total: data[key]
                 }))
-
-  const firstElement = newData.shift(); // Remove the first element
-  newData.push(firstElement); // Add it to the end
-
+  
+  if (type === "daily") {
+    const firstElement = newData.shift(); // Remove the first element
+    newData.push(firstElement); // Add it to the end
+  }
+              
   return newData;
 };
 
@@ -38,7 +40,7 @@ const formatTick = (tick, type) => {
 };
 
 const StackedBarChart = ({ data, type }) => {
-  const transformedData = transformData(data);
+  const transformedData = transformData(data, type);
   const dataKey = formatDataKey(type);
 
   return (

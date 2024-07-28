@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
-const ScheduleTable = ({ startTime, endTime, handleHorarioChange }) => {
+const ScheduleTable = ({ startTime, endTime, startDay, endDay, handleHorarioChange }) => {
+  const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
   const columns = useMemo(
     () => [
       { Header: 'Time', accessor: 'time' },
@@ -16,33 +18,38 @@ const ScheduleTable = ({ startTime, endTime, handleHorarioChange }) => {
     []
   );
 
-  const generateTimeSlots = (start, end) => {
+  const generateTimeSlots = (start, end, startDay, endDay) => {
     const timeSlots = [];
     const startHour = parseInt(start.split(':')[0]);
     const endHour = parseInt(end.split(':')[0]);
 
+    const startDate = new Date(startDay);
+    const endDate = new Date(endDay);
+
     for (let hour = startHour; hour <= endHour; hour++) {
       const time = `${hour.toString().padStart(2, '0')}:00:00`;
-      timeSlots.push({
-        time,
-        monday: false,
-        tuesday: false,
-        wednesday: false,
-        thursday: false,
-        friday: false,
-        saturday: false,
-        sunday: false,
+      const row = { time };
+
+      daysOfWeek.forEach((day, index) => {
+        const currentDayOfWeek = new Date(startDate);
+        currentDayOfWeek.setDate(currentDayOfWeek.getDate() + (index - startDate.getDay()));
+
+        const isWithinRange = currentDayOfWeek >= startDate && currentDayOfWeek <= endDate;
+
+        row[day] = isWithinRange ? false : 'X';
       });
+
+      timeSlots.push(row);
     }
 
     return timeSlots;
   };
 
-  const [data, setData] = useState(() => generateTimeSlots(startTime, endTime));
+  const [data, setData] = useState(() => generateTimeSlots(startTime, endTime, startDay, endDay));
 
   useEffect(() => {
-    setData(generateTimeSlots(startTime, endTime));
-  }, [startTime, endTime]);
+    setData(generateTimeSlots(startTime, endTime, startDay, endDay));
+  }, [startTime, endTime, startDay, endDay]);
 
   const {
     getTableProps,
@@ -53,6 +60,7 @@ const ScheduleTable = ({ startTime, endTime, handleHorarioChange }) => {
   } = useTable({ columns, data });
 
   const toggleCell = (rowIndex, columnId) => {
+    if (data[rowIndex][columnId] === 'X') return;
     const newData = data.map((row, index) => 
       index === rowIndex 
         ? { ...row, [columnId]: !row[columnId] } 
@@ -60,7 +68,6 @@ const ScheduleTable = ({ startTime, endTime, handleHorarioChange }) => {
     );
     setData(newData);
     handleHorarioChange(newData);
-    console.log(`Toggled ${columnId} at ${newData[rowIndex].time} to ${newData[rowIndex][columnId]}`);
   };
 
   return (
@@ -96,11 +103,11 @@ const ScheduleTable = ({ startTime, endTime, handleHorarioChange }) => {
                     style={{
                       border: '1px solid black',
                       padding: '6px',
-                      backgroundColor: cell.value ? '#90EE90' : 'white',
-                      cursor: 'pointer',
+                      backgroundColor: cell.value === 'X' ? '#d3d3d3' : cell.value ? '#90EE90' : 'white',
+                      cursor: cell.value === 'X' ? 'not-allowed' : 'pointer',
                     }}
                   >
-                    {cell.value ? '✓' : ''}
+                    {cell.value === 'X' ? 'X' : cell.value ? '✓' : ''}
                   </td>
                 );
               })}

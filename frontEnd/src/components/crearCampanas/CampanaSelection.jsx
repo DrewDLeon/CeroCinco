@@ -25,7 +25,6 @@ function CampanaSelection({pantallas, pantallaSeleccionada, handlePantallaSeleci
     pantallaImage = Panel410Photo;
   }
 
-  console.log(pantallas);
   return(
     <>
     <div className='campana-selection-container'>

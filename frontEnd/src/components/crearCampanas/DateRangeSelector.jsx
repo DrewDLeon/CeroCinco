@@ -4,9 +4,9 @@ import { addDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import './DateRangeSelector.css'; // If you have custom CSS
+import './DateRangeSelector.css';
 
-const DateRangeSelector = ({ onChange }) => {
+const DateRangeSelector = ({ onChange, handleFechasChange }) => {
   // Calculate the minimum selectable date (7 days from today)
   const minSelectableDate = useMemo(() => addDays(new Date(), 7), []);
 
@@ -19,21 +19,11 @@ const DateRangeSelector = ({ onChange }) => {
   ]);
 
   const handleSelect = (ranges) => {
+    handleFechasChange(ranges.selection.startDate, ranges.selection.endDate);
     setState([ranges.selection]);
     if (onChange) {
       onChange(ranges.selection);
     }
-  };
-
-  // Spanish language configuration
-  const spanishLocale = {
-    localize: {
-      day: n => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'][n],
-      month: n => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'][n],
-    },
-    formatLong: {
-      date: () => 'dd/MM/yyyy',
-    },
   };
 
   return (
@@ -50,7 +40,7 @@ const DateRangeSelector = ({ onChange }) => {
       monthDisplayFormat="MMMM yyyy"
       weekdayDisplayFormat="EEEEEE"
       dayDisplayFormat="d"
-      rangeColors={['#3498db']}
+      rangeColors={['#30EFA6']}
     />
   );
 };

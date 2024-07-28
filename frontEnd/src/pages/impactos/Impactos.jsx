@@ -176,6 +176,8 @@ function Impactos() {
 
   }, [pantallaSeleccionada, activeButton]);
 
+  const chartKey = `${pantallaSeleccionada.id_pantalla}-${startDate}-${endDate}-${activeButton}`;
+
   return (
     <>
       <div className="visualizador-impactos-container">
@@ -234,7 +236,11 @@ function Impactos() {
             <div className="graph-container">
               {panelData ? (
                 <>
-                  <StackedBarChart data={panelData} type={activeButton}/>
+                  <StackedBarChart 
+                    data={panelData} 
+                    type={activeButton}
+                    key={chartKey}
+                    />
                 </>
               ) : (
                 <p>Cargando datos...</p>

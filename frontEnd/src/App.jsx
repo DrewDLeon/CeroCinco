@@ -4,7 +4,7 @@ import MainLayout from './layout/MainLayout';
 import Login from './pages/login/Login';
 import MisCampanas from './pages/misCampanas/MisCampanas';
 import Impactos from './pages/impactos/Impactos';
-import CrearCampana from './pages/crearCampana/CrearCampana';
+import CrearCampanas from './pages/crearCampana/CrearCampana';
 import Admin from './pages/adminPruebas/admin';
 import './App.css';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
@@ -41,7 +41,7 @@ function App() {
           element={
             <PrivateRoute>
               <MainLayout>
-                <CrearCampana />
+                <CrearCampanas />
               </MainLayout>
             </PrivateRoute>
           }

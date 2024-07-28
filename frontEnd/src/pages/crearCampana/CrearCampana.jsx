@@ -5,14 +5,39 @@ import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
 import ScheduleTable from "../../components/crearCampanas/ScheduleTable"
 import './CrearCampana.css';
 
-
-function CrearCampañas() {
+function CrearCampanas() {
   const [pantallas, setPantallas] = useState([]);
   const [pantallaSeleccionada, setPantallaSeleccionada] = useState(null);
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
   const [horario, setHorario] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [cotizacion, setCotizacion] = useState(0);
+
+  function calculateCotiacion() {
+    if (!fechaInicio || !fechaFin || !horario) {
+      setCotizacion(0);
+      return;
+    }
+
+    const horariosArray = Object.values(horario);
+    let numberSpots = 0;
+
+    for (let i = 0; i < horariosArray.length; i++) {
+      const hourSelectedDays = Object.values(horariosArray[i]);
+
+      for (let j = 0; j < hourSelectedDays.length; j++) {
+        if (typeof(hourSelectedDays[j]) !== 'string' && hourSelectedDays[j] === true) {
+          numberSpots++;
+        }
+      }
+    }
+
+    const difference = fechaInicio.getTime() - fechaFin.getTime();
+    const duracion = Math.abs(difference / (1000 * 60 * 60 * 24)) + 1;
+  
+    setCotizacion(numberSpots * duracion * 4);
+  };
 
   function handleHorarioChange(newHorario) {
     setHorario(newHorario);
@@ -47,18 +72,23 @@ function CrearCampañas() {
     fetchPantallasData();
   }, [])
 
+  useEffect(() => {
+    setHorario([]);
+  }, [pantallaSeleccionada]);
+
+  useEffect(() => {
+    setHorario([]);
+  }, [fechaInicio, fechaFin]);
+
+  useEffect(() => {
+    calculateCotiacion();
+  }, [horario]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  console.log("");
-  console.log("");
-  console.log("Pantallas: " + pantallas);
-  console.log("Pantalla seleccionada: " + pantallaSeleccionada);
-  console.log("Fecha de inicio: " + fechaInicio);
-  console.log("Fecha de fin: " + fechaFin);
-  console.log("Horario: " + horario);
-
+  const scheduleTableKey = `${pantallaSeleccionada?.id_pantalla}-${fechaInicio || 'no-fechaInicio'}-${fechaFin || 'no-fechaFin'}`;
 
   return (
     <div className="creacion-campana-container">
@@ -73,15 +103,17 @@ function CrearCampañas() {
         {pantallaSeleccionada && (
           <>
             <div>
-              {/* <CalendarComponent 
+              <DateRangeSelector 
                 handleFechasChange={handleFechasChange}
-              /> */}
-              <DateRangeSelector />
+              />
             </div>
             <div>
               <ScheduleTable 
+                key={scheduleTableKey}
                 startTime={pantallaSeleccionada.hora_inicio} 
                 endTime={pantallaSeleccionada.hora_fin} 
+                startDay={fechaInicio}
+                endDay={fechaFin}
                 handleHorarioChange={handleHorarioChange}
               />
             </div>
@@ -95,11 +127,11 @@ function CrearCampañas() {
         <p>Campaña sujeta a revision</p>
         <p>costo por spot: </p>
         <strong>Cotizacion</strong>
-        <p>1000 pesos</p>
+        <p>{cotizacion} pesos</p>
         <button>crear campana</button>
       </div>
     </div>
   );
 }
 
-export default CrearCampañas;
+export default CrearCampanas;

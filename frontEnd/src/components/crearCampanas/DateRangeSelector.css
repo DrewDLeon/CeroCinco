@@ -48,6 +48,6 @@
 }
 
 .rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
-  background-color: #34db7a;
-  color: white;
+  /* background-color: #34db7a;
+  color: white; */
 }
