@@ -5,6 +5,21 @@ import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
 import ScheduleTable from "../../components/crearCampanas/ScheduleTable"
 import './CrearCampana.css';
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth()
+  const day = date.getDay();
+  return `${year}-${month}-${day}`; // Formatear la fecha como YYYY-MM-DD
+}
+
+function getUniqueDaysFromHorarios() {
+  
+}
+
+function getUniqueHoursFromHorarios() {
+
+}
+
 function CrearCampanas() {
   const [pantallas, setPantallas] = useState([]);
   const [pantallaSeleccionada, setPantallaSeleccionada] = useState(null);
@@ -52,6 +67,27 @@ function CrearCampanas() {
     setFechaFin(newFechaFin);
   }
 
+  async function handleCrearCampana() {
+    if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !horario) {
+      alert('Por favor asegurate de tener selecionada una pantalla, un rango de fechas y horarios');
+      return
+    }
+
+    try {
+      const url = `http://localhost:3000/api/crearCampana/${formatDate(fechaInicio)}/${formatDate(fechaFin)}/`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+    } catch (error) {
+      console.error('Error getting disponibilidad:', error);
+    }
+      
+  }
+
   useEffect(() => {
     const fetchPantallasData = async () => {
       try {
@@ -89,6 +125,8 @@ function CrearCampanas() {
   }
 
   const scheduleTableKey = `${pantallaSeleccionada?.id_pantalla}-${fechaInicio || 'no-fechaInicio'}-${fechaFin || 'no-fechaFin'}`;
+
+  console.log('horario', horario);
 
   return (
     <div className="creacion-campana-container">

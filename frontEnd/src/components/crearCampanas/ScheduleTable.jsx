@@ -2,18 +2,18 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
 const ScheduleTable = ({ startTime, endTime, startDay, endDay, handleHorarioChange }) => {
-  const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const daysOfWeek = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 
   const columns = useMemo(
     () => [
       { Header: 'Time', accessor: 'time' },
-      { Header: 'Monday', accessor: 'monday' },
-      { Header: 'Tuesday', accessor: 'tuesday' },
-      { Header: 'Wednesday', accessor: 'wednesday' },
-      { Header: 'Thursday', accessor: 'thursday' },
-      { Header: 'Friday', accessor: 'friday' },
-      { Header: 'Saturday', accessor: 'saturday' },
-      { Header: 'Sunday', accessor: 'sunday' },
+      { Header: 'Lunes', accessor: 'lunes' },
+      { Header: 'Martes', accessor: 'martes' },
+      { Header: 'Miercoles', accessor: 'miercoles' },
+      { Header: 'Jueves', accessor: 'jueves' },
+      { Header: 'Viernes', accessor: 'viernes' },
+      { Header: 'Sabado', accessor: 'sabado' },
+      { Header: 'Domingo', accessor: 'domingo' },
     ],
     []
   );
@@ -27,7 +27,7 @@ const ScheduleTable = ({ startTime, endTime, startDay, endDay, handleHorarioChan
     const endDate = new Date(endDay);
 
     for (let hour = startHour; hour <= endHour; hour++) {
-      const time = `${hour.toString().padStart(2, '0')}:00:00`;
+      const time = `${hour.toString().padStart(2, '0')}:00`;
       const row = { time };
 
       daysOfWeek.forEach((day, index) => {
