@@ -15,17 +15,18 @@ const tbl_campanas = {
   getCampanasWithPantallaData: async function(userId) {
     const query = `
       select
-          tbl_campanas.id_pantalla,
-          tbl_campanas.id_campaña,
-          tbl_campanas.nombre_campaña,
-          tbl_campanas.fecha_inicio,
-          tbl_campanas.fecha_fin,
-          tbl_campanas.weekdays,
-          tbl_campanas.estatus,
-          tbl_pantallas.nombre_pantalla,
-          tbl_pantallas.direccion_pantalla
-      from tbl_campanas
-      join tbl_pantallas on tbl_pantallas.id_pantalla = tbl_campanas.id_pantalla
+        tc.id_campaña,
+        tc.nombre_campaña,
+        tp.direccion_pantalla,
+        tp.nombre_pantalla,
+        tc.fecha_inicio, 
+        tc.fecha_fin, 
+        tc.weekdays, 
+        tc.estatus,
+        tp.hora_inicio,
+        tp.hora_fin
+      from tbl_campanas tc
+      join tbl_pantallas tp on tp.id_pantalla = tc.id_pantalla
       where id_usuario = ?;
     `;
 

@@ -12,6 +12,35 @@ function formatDate(dateString) {
   }
 }
 
+function translateStatus(status) {
+  console.log(typeof(status));
+  if (status === 0) {
+    return "Rechazado";
+  }
+
+  if (status === 1) {
+    return "En revision";   
+  }
+
+  if (status === 2) {
+    return "Pendiente de pago";
+  }
+
+  if (status === 3) {
+    return "Aceptada";
+  }
+
+  if (status === 4) {
+    return "Activa";
+  }
+
+  if (status === 5) {
+    return "Finalizada";
+  }
+
+  return "Error en el estatus";
+}
+
 function CampanaItem({ props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,23 +54,20 @@ function CampanaItem({ props }) {
 
   return (
     <>
-      <div className="campana-item-container">
+      <div className="mis-campana-item-container">
         <div className="campana-item-cell">
-          Nombre de la campaña
+          {props.nombre_campaña}
         </div>
-        <div className="campana-item-cell">
-          {props.direccion_pantalla}
-        </div>
-        <div className="campana-item-cell">
+        <div className="mis-campana-item-cell">
           {formatDate(props.fecha_inicio)}
         </div>
-        <div className="campana-item-cell">
+        <div className="mis-campana-item-cell">
           {formatDate(props.fecha_fin)}
         </div>
-        <div className="campana-item-cell">
-          {props.estatus === 1 ? "Activo" : "En revision"}
+        <div className="mis-campana-item-cell">
+          {translateStatus(props.estatus)}
         </div>
-        <div className="campana-item-cell">
+        <div className="mis-campana-item-cell">
           <button onClick={openModal}>Más info</button>
         </div>
       </div>

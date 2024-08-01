@@ -49,14 +49,14 @@ function MisCampañas() {
     // Filter by name
     if (searchName) {
       filteredData = filteredData.filter(campana => 
-        campana.direccion_pantalla.toLowerCase().includes(searchName.toLowerCase())
+        campana.nombre_campaña.toLowerCase().includes(searchName.toLowerCase())
       );
     }
 
     // Filter by status
     if (filterStatus) {
       filteredData = filteredData.filter(campana => 
-        filterStatus === 'Activo' ? campana.estatus === 1 : campana.estatus === 0
+        campana.estatus === parseInt(filterStatus)
       );
     }
 
@@ -80,9 +80,9 @@ function MisCampañas() {
   const toggleSortOrder = (order) => {
     setSortOrder(prevOrder => prevOrder === order ? '' : order);
   };
-
-  const toggleFilterStatus = (status) => {
-    setFilterStatus(prevStatus => prevStatus === status ? '' : status);
+  
+  const handleStatusChange = (event) => {
+    setFilterStatus(event.target.value);
   };
 
   console.log('campanas:', campanas);
@@ -120,20 +120,15 @@ function MisCampañas() {
             </div>
             <div className='filter-column'>
               <label className='filter-label'>Filtrar por estado:</label>
-              <div className='buttons-container'>
-                <button 
-                  className={`filter-button ${filterStatus === 'Activo' ? 'active-filter-button' : ''}`} 
-                  onClick={() => toggleFilterStatus('Activo')}
-                >
-                  Activo
-                </button>
-                <button 
-                  className={`filter-button ${filterStatus === 'En proceso' ? 'active-filter-button' : ''}`} 
-                  onClick={() => toggleFilterStatus('En proceso')}
-                >
-                  En proceso
-                </button>
-              </div>
+              <select onChange={handleStatusChange} value={filterStatus}>
+                <option value=''>Ninguno</option>
+                <option value='0'>Rechazado</option>
+                <option value='1'>En revision</option>
+                <option value='2'>Pendiente de pago</option>
+                <option value='3'>Aceptada</option>
+                <option value='4'>Activa</option>
+                <option value='5'>Finalizada</option>
+              </select>
             </div>
           </div>
           <CampanaItemsHeader />
@@ -141,7 +136,7 @@ function MisCampañas() {
       <div>
       <div className='campañas-container'>
         {processedData.map((campana) => (
-          <CampanaItem key={campana.id_campaña} props={campana} />
+          <CampanaItem key={campana.id_campaña} props={campana}/>
         ))}
       </div>
       </div>

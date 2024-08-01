@@ -152,12 +152,12 @@ function AdminCampanaModal({ isOpen, onClose, campana, status }) {
         ) : (
           <div>
             <h2>{campana.nombre_campaña}</h2>
-            <p>Pantalla: {campana.nombre_pantalla}</p>
-
             <div className="modal-info">
               <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
               <div className="modal-text-data">
-                <p><b>Referencia campaña:</b> {/*campana.usuario*/} añadir referencia cuando se agregue</p>
+                <p><b>Pantalla:</b> {campana.nombre_pantalla}</p>
+                <p><b>Referencia pago:</b> {/*campana.usuario*/} añadir referencia cuando se agregue</p>
+                <p><b>Precio:</b> {/*campana.usuario*/} poner precio cuando se agregue</p>
                 <p><b>Usuario:</b> {campana.usuario}</p>
                 <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
                 <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
