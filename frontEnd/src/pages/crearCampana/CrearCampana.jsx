@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import CalendarComponent from "../../components/rangeCalendar/RangeCalendar"; 
 import CampanaSelection from "../../components/crearCampanas/CampanaSelection"
 import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
 import ScheduleTable from "../../components/crearCampanas/ScheduleTable"
@@ -13,7 +12,7 @@ function formatDate(date) {
 }
 
 function getUniqueDaysFromHorarios() {
-  
+
 }
 
 function getUniqueHoursFromHorarios() {

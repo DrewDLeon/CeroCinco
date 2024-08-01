@@ -5,7 +5,7 @@ import Login from './pages/login/Login';
 import MisCampanas from './pages/misCampanas/MisCampanas';
 import Impactos from './pages/impactos/Impactos';
 import CrearCampanas from './pages/crearCampana/CrearCampana';
-import Admin from './pages/adminPruebas/admin';
+import AdminCampanas from './pages/adminCampanas/AdminCampanas';
 import './App.css';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 
@@ -57,11 +57,11 @@ function App() {
           }
         />
         <Route
-          path="/admin"
+          path="/adminCampanas"
           element={
             <PrivateRoute adminRoute>
               <MainLayout>
-                <Admin />
+                <AdminCampanas />
               </MainLayout>
             </PrivateRoute>
           }

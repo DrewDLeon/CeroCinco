@@ -13,7 +13,7 @@ function Sidebar() {
           <>
             <li className="sidebar-list-item-container">
               <NavLink
-                to="/admin"
+                to="/AdminCampanas"
                 className={({ isActive }) => (isActive ? 'active' : '')}
               >
                 Admin Panel

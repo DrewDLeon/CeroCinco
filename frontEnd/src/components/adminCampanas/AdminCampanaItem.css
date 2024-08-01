@@ -1,0 +1,27 @@
+.campana-item-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; /* Ajusta estos valores según tus necesidades */
+  width: 100%;
+  /*background-color: var(--white);*/
+  color: var(--primary);
+  /* padding: 10px; */
+  margin: 0;
+  border-bottom: solid 1px;
+}
+
+.campana-item-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.campana-item-cell button {
+  background-color: var(--secondary);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+  width: 100px;
+}

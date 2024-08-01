@@ -29,7 +29,7 @@ function LoginForm() {
         const isAdmin = localStorage.getItem('admin') === '1';
         
         if (isAdmin) {
-          navigate('/admin');
+          navigate('/AdminCampanas');
         } else {
           navigate('/miscampañas');
         }

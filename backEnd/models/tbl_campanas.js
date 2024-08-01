@@ -55,13 +55,18 @@ const tbl_campanas = {
   getCampanasAdmin: async function() {
     const query = `
       SELECT tc.id_campaña,
+            tc.nombre_campaña,
+            tc.id_usuario,
+            tp.direccion_pantalla,
             tp.nombre_pantalla,
             tc.fecha_inicio, 
             tc.fecha_fin, 
             tc.weekdays, 
-            tc.estatus 
+            tc.estatus,
+            tu.usuario
       FROM tbl_campanas tc
       INNER JOIN tbl_pantallas tp ON tc.id_pantalla = tp.id_pantalla
+      INNER JOIN tbl_usuarios tu ON tc.id_usuario = tu.id_usuario
     `;
 
     const [rows] = await db.query(query)

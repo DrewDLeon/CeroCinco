@@ -1,7 +1,6 @@
-// CampanaItem.js
 import React, { useState } from 'react';
-import CampanaModal from './CampanaModal';
-import './CampanaItem.css';
+import CampanaModal from './AdminCampanaModal';
+import './AdminCampanaItem.css';
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -12,7 +11,7 @@ function formatDate(dateString) {
   }
 }
 
-function CampanaItem({ props }) {
+function AdminCampanaItem({ props }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -27,7 +26,7 @@ function CampanaItem({ props }) {
     <>
       <div className="campana-item-container">
         <div className="campana-item-cell">
-          Nombre de la campaña
+          {props.nombre_campaña}
         </div>
         <div className="campana-item-cell">
           {props.direccion_pantalla}
@@ -50,4 +49,4 @@ function CampanaItem({ props }) {
   );
 }
 
-export default CampanaItem;
+export default AdminCampanaItem;
