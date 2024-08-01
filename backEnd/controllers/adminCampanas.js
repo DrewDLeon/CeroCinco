@@ -27,6 +27,17 @@ const adminCampanasController = {
             console.log(error);
             res.status(500).json({message: 'Error al obtener las campañas'});
         }
+    },
+    cambiarEstatusCampana: async function(req, res){
+        const { newStatus, idCampana } = req.body;
+
+        try {
+            const answer = await tbl_campanas.cambiarEstatusCampana(newStatus, idCampana);
+            res.status(200).json({message: 'Update en la campaña exitoso!', answer: answer});
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({message: 'Error al obtener las campañas'});
+        }
     }
 }
 

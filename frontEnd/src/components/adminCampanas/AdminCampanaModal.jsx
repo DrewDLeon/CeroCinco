@@ -3,9 +3,53 @@ import { useTable } from 'react-table';
 import Panel220Photo from '../../assets/paneles/panel220.png';
 import Panel302Photo from '../../assets/paneles/panel302.jpg';
 import Panel410Photo from '../../assets/paneles/panel410.jpg';
-import './AdminCampanaModal.css';
 
-function AdminCampanaModal({ isOpen, onClose, campana }) {
+import './AdminCampanaModal.css';
+const formatHour = (hour) => {
+  const period = hour < 12 ? 'AM' : 'PM';
+  const formattedHour = hour % 12 || 12;
+  return `${formattedHour} ${period}`;
+};
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  if (!isNaN(date.getTime())) {
+    return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+  } else {
+    return 'Invalid date';
+  }
+}
+
+function translateStatus(status) {
+  console.log(typeof(status));
+  if (status === 0) {
+    return "Rechazado";
+  }
+
+  if (status === 1) {
+    return "En revision";   
+  }
+
+  if (status === 2) {
+    return "Pendiente de pago";
+  }
+
+  if (status === 3) {
+    return "Aceptada";
+  }
+
+  if (status === 4) {
+    return "Activa";
+  }
+
+  if (status === 5) {
+    return "Finalizada";
+  }
+
+  return "Error en el estatus";
+}
+
+function AdminCampanaModal({ isOpen, onClose, campana, status }) {
   const [horarios, setHorarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,12 +68,11 @@ function AdminCampanaModal({ isOpen, onClose, campana }) {
   useEffect(() => {
     const fetchHorarios = async () => {
       try {
-        const token = localStorage.getItem('token');
         const url = `http://localhost:3000/api/campanas/getHorariosCampana/${campana.id_campaña}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Content-Type': 'application/json'
           }
         });
 
@@ -50,25 +93,21 @@ function AdminCampanaModal({ isOpen, onClose, campana }) {
     }
   }, [isOpen, campana.id_campaña]);
 
-  const daysOfWeek = useMemo(() => ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'], []);
-
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    if (!isNaN(date.getTime())) {
-      return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-    } else {
-      return 'Invalid date';
-    }
-  }
+  const daysOfWeek = useMemo(() => ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'], []);
 
   const formatHour = (hour) => {
-    const period = hour < 12 ? 'AM' : 'PM';
-    const formattedHour = hour % 12 || 12;
-    return `${formattedHour} ${period}`;
+    return `${hour.toString().padStart(2, '0')}:00`;
+  };
+
+  const parseHour = (timeString) => {
+    return parseInt(timeString.split(':')[0], 10);
   };
 
   const data = useMemo(() => {
-    const hours = Array.from({ length: 24 }, (_, i) => i);
+    const startHour = parseHour(campana.hora_inicio);
+    const endHour = parseHour(campana.hora_fin);
+    const hours = Array.from({ length: endHour - startHour + 1 }, (_, i) => startHour + i);
+
     return hours.map(hour => {
       const row = { hour: formatHour(hour) };
       daysOfWeek.forEach((_, dayIndex) => {
@@ -76,7 +115,7 @@ function AdminCampanaModal({ isOpen, onClose, campana }) {
       });
       return row;
     });
-  }, [horarios, daysOfWeek]);
+  }, [horarios, daysOfWeek, campana]);
 
   const columns = useMemo(() => {
     const cols = [
@@ -103,6 +142,7 @@ function AdminCampanaModal({ isOpen, onClose, campana }) {
     return null;
   }
 
+  console.log(campana);
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -122,7 +162,7 @@ function AdminCampanaModal({ isOpen, onClose, campana }) {
                 <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
                 <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
                 <p><b>Fecha de Fin:</b> {formatDate(campana.fecha_fin)}</p>
-                <p><b>Estado:</b> {campana.estatus === 1 ? 'Activo' : 'En revisión'}</p>
+                <p><b>Estado:</b> {translateStatus(status)}</p>
               </div>
             </div>
 

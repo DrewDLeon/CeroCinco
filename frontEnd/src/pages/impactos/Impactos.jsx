@@ -185,7 +185,8 @@ function Impactos() {
           <div className="visualizador-impactos-seleccion-container">
             <select 
               className="panel-dropdown"
-              onChange={(e) => setPantallaSeleccionada(pantallas.find(p => p.id_pantalla === parseInt(e.target.value)))}>
+              onChange={(e) => setPantallaSeleccionada(pantallas.find(p => p.id_pantalla === parseInt(e.target.value)))}
+            >
               {pantallas.map(pantalla => (
                 <option key={pantalla.id_pantalla} value={pantalla.id_pantalla}>
                   {pantalla.nombre_pantalla}

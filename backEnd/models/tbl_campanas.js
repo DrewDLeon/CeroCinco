@@ -63,7 +63,9 @@ const tbl_campanas = {
             tc.fecha_fin, 
             tc.weekdays, 
             tc.estatus,
-            tu.usuario
+            tu.usuario,
+            tp.hora_inicio,
+            tp.hora_fin
       FROM tbl_campanas tc
       INNER JOIN tbl_pantallas tp ON tc.id_pantalla = tp.id_pantalla
       INNER JOIN tbl_usuarios tu ON tc.id_usuario = tu.id_usuario
@@ -89,6 +91,16 @@ const tbl_campanas = {
     `;
 
     const [rows] = await db.query(query, [campanaId])
+  },
+  cambiarEstatusCampana: async function(newStatus, campanaId) {
+    const query = `
+      UPDATE tbl_campanas as tc
+      SET  tc.estatus = ?
+      WHERE tc.id_campaña = ?;
+    `;
+
+    const answer = await db.query(query, [newStatus, campanaId])
+    return answer
   }
 };
 

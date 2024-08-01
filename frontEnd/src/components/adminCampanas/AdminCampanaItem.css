@@ -1,6 +1,6 @@
 .campana-item-container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; /* Ajusta estos valores según tus necesidades */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; /* Ajusta estos valores según tus necesidades */
   width: 100%;
   /*background-color: var(--white);*/
   color: var(--primary);

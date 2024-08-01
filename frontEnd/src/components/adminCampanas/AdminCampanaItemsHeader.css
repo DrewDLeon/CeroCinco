@@ -1,6 +1,6 @@
 .campana-header-container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; /* Ajusta estos valores según tus necesidades */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; /* Ajusta estos valores según tus necesidades */
   width: 100%;
   height: 50px;
   font-weight: bold;

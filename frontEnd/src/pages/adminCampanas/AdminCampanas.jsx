@@ -12,9 +12,7 @@ function AdminCampanas() {
 
   useEffect(() => {
     const fetchCampanas = async () => {
-      try {
-        const token = localStorage.getItem('token');
-  
+      try {  
         const url = `http://localhost:3000/api/adminCampanas/getAdminCampanas/`;
   
         const response = await fetch(url, {
@@ -56,7 +54,7 @@ function AdminCampanas() {
     // Filter by status
     if (filterStatus) {
       filteredData = filteredData.filter(campana => 
-        filterStatus === 'Activo' ? campana.estatus === 1 : campana.estatus === 0
+        campana.estatus === parseInt(filterStatus)
       );
     }
 
@@ -80,12 +78,10 @@ function AdminCampanas() {
   const toggleSortOrder = (order) => {
     setSortOrder(prevOrder => prevOrder === order ? '' : order);
   };
-
-  const toggleFilterStatus = (status) => {
-    setFilterStatus(prevStatus => prevStatus === status ? '' : status);
+  
+  const handleStatusChange = (event) => {
+    setFilterStatus(event.target.value);
   };
-
-  console.log('campanas:', campanas);
 
   return (
     <div className='container'>
@@ -120,20 +116,15 @@ function AdminCampanas() {
             </div>
             <div className='filter-column'>
               <label className='filter-label'>Filtrar por estado:</label>
-              <div className='buttons-container'>
-                <button 
-                  className={`filter-button ${filterStatus === 'Activo' ? 'active-filter-button' : ''}`} 
-                  onClick={() => toggleFilterStatus('Activo')}
-                >
-                  Activo
-                </button>
-                <button 
-                  className={`filter-button ${filterStatus === 'En proceso' ? 'active-filter-button' : ''}`} 
-                  onClick={() => toggleFilterStatus('En proceso')}
-                >
-                  En proceso
-                </button>
-              </div>
+              <select onChange={handleStatusChange} value={filterStatus}>
+                <option value=''>Ninguno</option>
+                <option value='0'>Rechazado</option>
+                <option value='1'>En revision</option>
+                <option value='2'>Pendiente de pago</option>
+                <option value='3'>Aceptada</option>
+                <option value='4'>Activa</option>
+                <option value='5'>Finalizada</option>
+              </select>
             </div>
           </div>
           <AdminCampanaItemsHeader />
