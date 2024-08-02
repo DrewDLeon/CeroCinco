@@ -18,7 +18,7 @@ const authController = {
         return res.status(401).json({ message: 'Contraseña incorrecta' });
       }
 
-      const token = jwt.sign({ userId: user.id_usuario, admin: user.admin }, config.JWT_SECRET, { expiresIn: '1h' });
+      const token = jwt.sign({ userId: user.id_usuario, admin: user.admin }, config.JWT_SECRET, { expiresIn: '8h' });
 
       res.json({ token, admin: user.admin });
     } catch (error) {

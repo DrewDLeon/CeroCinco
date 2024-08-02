@@ -2,17 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
 const ScheduleTable = ({ startTime, endTime, startDay, endDay, handleHorarioChange }) => {
-  const daysOfWeek = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  const daysOfWeek = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
 
   const columns = useMemo(
     () => [
       { Header: 'Time', accessor: 'time' },
       { Header: 'Lunes', accessor: 'lunes' },
       { Header: 'Martes', accessor: 'martes' },
-      { Header: 'Miercoles', accessor: 'miercoles' },
+      { Header: 'Miércoles', accessor: 'miércoles' },
       { Header: 'Jueves', accessor: 'jueves' },
       { Header: 'Viernes', accessor: 'viernes' },
-      { Header: 'Sabado', accessor: 'sabado' },
+      { Header: 'Sábado', accessor: 'sábado' },
       { Header: 'Domingo', accessor: 'domingo' },
     ],
     []
@@ -22,29 +22,38 @@ const ScheduleTable = ({ startTime, endTime, startDay, endDay, handleHorarioChan
     const timeSlots = [];
     const startHour = parseInt(start.split(':')[0]);
     const endHour = parseInt(end.split(':')[0]);
-
+  
     const startDate = new Date(startDay);
     const endDate = new Date(endDay);
-
+  
+    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  
+    const dayDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+  
+    let includedDays = new Set();
+    if (dayDifference <= 6) {
+      for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        includedDays.add(d.getDay());
+      }
+    }
+  
     for (let hour = startHour; hour <= endHour; hour++) {
       const time = `${hour.toString().padStart(2, '0')}:00`;
       const row = { time };
-
+  
       daysOfWeek.forEach((day, index) => {
-        const currentDayOfWeek = new Date(startDate);
-        currentDayOfWeek.setDate(currentDayOfWeek.getDate() + (index - startDate.getDay()));
-
-        const isWithinRange = currentDayOfWeek >= startDate && currentDayOfWeek <= endDate;
-
-        row[day] = isWithinRange ? false : 'X';
+        const dayIndex = (index + 1) % 7; // Adjusting index to match JavaScript's getDay() (0 for Sunday, 6 for Saturday)
+        const isWithinRange = dayDifference > 6 || includedDays.has(dayIndex);
+  
+        row[day.toLowerCase()] = isWithinRange ? false : 'X';
       });
-
+  
       timeSlots.push(row);
     }
-
+  
     return timeSlots;
   };
-
+  
   const [data, setData] = useState(() => generateTimeSlots(startTime, endTime, startDay, endDay));
 
   useEffect(() => {
