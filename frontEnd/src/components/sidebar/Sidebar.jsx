@@ -19,6 +19,14 @@ function Sidebar() {
                 Admin Panel
               </NavLink>
             </li>
+            <li className="sidebar-list-item-container">
+              <NavLink
+                to="/adminCrearUsuario"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                Crear usuario
+              </NavLink>
+            </li>
           </>
         )}
         {/*Navbar items cuando el perfil no es admin*/}
@@ -44,7 +52,7 @@ function Sidebar() {
                 className={({ isActive }) => isActive ? 'active' : ''}>
                 Impactos
               </NavLink>
-            </li>   
+            </li>
           </>       
         )}
       </ul>

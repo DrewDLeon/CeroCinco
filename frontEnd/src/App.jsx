@@ -6,8 +6,9 @@ import MisCampanas from './pages/misCampanas/MisCampanas';
 import Impactos from './pages/impactos/Impactos';
 import CrearCampanas from './pages/crearCampana/CrearCampana';
 import AdminCampanas from './pages/adminCampanas/AdminCampanas';
-import './App.css';
+import AdminCrearUsuario from './pages/adminCrearUsuario/AdminCrearUsuario'
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import './App.css';
 
 const RedirectBasedOnRole = () => {
   const token = localStorage.getItem('token');
@@ -62,6 +63,16 @@ function App() {
             <PrivateRoute adminRoute>
               <MainLayout>
                 <AdminCampanas />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/adminCrearUsuario"
+          element={
+            <PrivateRoute adminRoute>
+              <MainLayout>
+                <AdminCrearUsuario />
               </MainLayout>
             </PrivateRoute>
           }
