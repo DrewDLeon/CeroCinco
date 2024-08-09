@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./AdminCrearUsuario.css"
 
 function AdminCrearUsuario() {
   const [tipoUsuario, setTipoUsuario] = useState('cliente');

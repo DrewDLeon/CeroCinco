@@ -59,7 +59,7 @@ function AdminCampanaItem({ props }) {
           {props.nombre_campaña}
         </div>
         <div className="campana-item-cell">
-          XXXXXXXXX
+          {props.id_campaña}
         </div>
         <div className="campana-item-cell">
           {formatDate(props.fecha_inicio)}

@@ -7,6 +7,7 @@ function AdminCampanas() {
   const [campanas, setCampanas] = useState([]);
   const [processedData, setProcessedData] = useState([]);
   const [searchName, setSearchName] = useState('');
+  const [filterReference, setFilterReference] = useState('');
   const [sortOrder, setSortOrder] = useState('');
   const [filterStatus, setFilterStatus] = useState('');
 
@@ -39,7 +40,7 @@ function AdminCampanas() {
 
   useEffect(() => {
     processData();
-  }, [searchName, sortOrder, filterStatus]);
+  }, [searchName, sortOrder, filterStatus, filterReference]);
 
   const processData = () => {
     let filteredData = [...campanas];
@@ -48,6 +49,13 @@ function AdminCampanas() {
     if (searchName) {
       filteredData = filteredData.filter(campana => 
         campana.nombre_campaña.toLowerCase().includes(searchName.toLowerCase())
+      );
+    }
+
+    // Filter by reference
+    if (filterReference) {
+      filteredData = filteredData.filter(campana => 
+        campana.id_campaña === Number(filterReference)
       );
     }
 
@@ -95,6 +103,16 @@ function AdminCampanas() {
                 name='searchByName'
                 value={searchName}
                 onChange={e => setSearchName(e.target.value)}
+              ></textarea>
+            </div>
+            <div className='filter-column'>
+              <label className='filter-label' htmlFor='searchByName'>Buscar por referencia:</label>
+              <textarea 
+                className='filter-textarea' 
+                id='filterReference' 
+                name='filterReference'
+                value={filterReference}
+                onChange={e => setFilterReference(e.target.value)}
               ></textarea>
             </div>
             <div className='filter-column'>

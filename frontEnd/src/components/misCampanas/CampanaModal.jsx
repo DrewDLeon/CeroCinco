@@ -156,7 +156,7 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
               <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
               <div className="modal-text-data">
                 <p><b>Pantalla:</b> {campana.nombre_pantalla}</p>
-                <p><b>Referencia pago:</b> {/*campana.usuario*/} XXXXXXX</p>
+                <p><b>Referencia pago:</b> {campana.id_campaña}</p>
                 <p><b>Precio:</b> {/*campana.usuario*/} $$$$$$</p>
                 <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
                 <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
