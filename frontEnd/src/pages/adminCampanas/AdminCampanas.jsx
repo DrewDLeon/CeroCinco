@@ -14,7 +14,7 @@ function AdminCampanas() {
   useEffect(() => {
     const fetchCampanas = async () => {
       try {  
-        const url = `http://localhost:3000/api/adminCampanas/getAdminCampanas/`;
+        const url = import.meta.env.VITE_API_URL + `/api/adminCampanas/getAdminCampanas/`;
   
         const response = await fetch(url, {
           method: 'GET',

@@ -27,7 +27,7 @@ function AdminCampanaItem({ props }) {
     const newStatus = e.target.value;
 
     try {
-      const url = "http://localhost:3000/api/adminCampanas/updateEstatusCampana";
+      const url = import.meta.env.VITE_API_URL + "/api/adminCampanas/updateEstatusCampana";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -45,7 +45,6 @@ function AdminCampanaItem({ props }) {
 
       const data = await response.json();
       setStatus(newStatus);
-      console.log('Status updated successfully:', data);
 
     } catch (error) {
       console.error('Error fetching data:', error);

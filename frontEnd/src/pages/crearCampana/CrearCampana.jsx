@@ -73,7 +73,7 @@ function CrearCampanas() {
     }
 
     try {
-      const url = `http://localhost:3000/api/crearCampana/${formatDate(fechaInicio)}/${formatDate(fechaFin)}/`;
+      const url = import.meta.env.VITE_API_URL + `/api/crearCampana/${formatDate(fechaInicio)}/${formatDate(fechaFin)}/`;
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -90,7 +90,7 @@ function CrearCampanas() {
   useEffect(() => {
     const fetchPantallasData = async () => {
       try {
-        const url = `http://localhost:3000/api/pantallas`;
+        const url = import.meta.env.VITE_API_URL + `/api/pantallas`;
         const response = await fetch(url);
         const data = await response.json();
         setPantallas(data);

@@ -79,7 +79,7 @@ function Impactos() {
   useEffect(() => {
     const fetchPantallasData = async () => {
       try {
-        const url = `http://localhost:3000/api/pantallas`;
+        const url = import.meta.env.VITE_API_URL + `/api/pantallas`;
         const response = await fetch(url);
         const data = await response.json();
         setPantallas(data);
@@ -95,7 +95,7 @@ function Impactos() {
   useEffect(() => {
     const fetchKpiDta = async () => {
       try {
-        const url = `http://localhost:3000/api/impactos/kpiData`;
+        const url = import.meta.env.VITE_API_URL + `/api/impactos/kpiData`;
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -119,7 +119,7 @@ function Impactos() {
 
     const fetchHourlyPanelData = async () => {
       try {
-        const url = `http://localhost:3000/api/impactos/hourlyData`;
+        const url = import.meta.env.VITE_API_URL + `/api/impactos/hourlyData`;
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -143,7 +143,7 @@ function Impactos() {
 
     const fetchDailyPanelData = async () => {
       try {
-        const url = `http://localhost:3000/api/impactos/dailyData`;
+        const url = import.meta.env.VITE_API_URL + `/api/impactos/dailyData`;
         const response = await fetch(url, {
           method: 'POST',
           headers: {

@@ -21,7 +21,6 @@ function formatDate(dateString) {
 }
 
 function translateStatus(status) {
-  console.log(typeof(status));
   if (status === 0) {
     return "Rechazado";
   }
@@ -68,7 +67,7 @@ function AdminCampanaModal({ isOpen, onClose, campana, status }) {
   useEffect(() => {
     const fetchHorarios = async () => {
       try {
-        const url = `http://localhost:3000/api/campanas/getHorariosCampana/${campana.id_campaña}`;
+        const url = import.meta.env.VITE_API_URL + `/api/campanas/getHorariosCampana/${campana.id_campaña}`;
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -142,7 +141,6 @@ function AdminCampanaModal({ isOpen, onClose, campana, status }) {
     return null;
   }
 
-  console.log(campana);
   return (
     <div className="modal-overlay">
       <div className="modal-content">

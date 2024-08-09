@@ -28,7 +28,7 @@ function AdminCrearUsuario() {
       return;
     }
 
-    const url = "http://localhost:3000/api/adminCrearUsuarios/";
+    const url = import.meta.env.VITE_API_URL + "/api/adminCrearUsuarios/";
 
     try {
       const response = await fetch(url, {

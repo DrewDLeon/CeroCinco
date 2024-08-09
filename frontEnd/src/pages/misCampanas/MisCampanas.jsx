@@ -15,7 +15,7 @@ function MisCampañas() {
       try {
         const token = localStorage.getItem('token');
   
-        const url = `http://localhost:3000/api/campanas/campanasWithPantalla/`;
+        const url = import.meta.env.VITE_API_URL + `/api/campanas/campanasWithPantalla/`;
   
         const response = await fetch(url, {
           method: 'GET',
@@ -84,8 +84,6 @@ function MisCampañas() {
   const handleStatusChange = (event) => {
     setFilterStatus(event.target.value);
   };
-
-  console.log('campanas:', campanas);
 
   return (
     <div className='container'>
