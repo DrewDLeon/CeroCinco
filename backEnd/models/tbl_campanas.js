@@ -36,13 +36,16 @@ const tbl_campanas = {
   },
   getDisponibilidadCampana: async function(fecha_inicio, fecha_fin, daysofweekArray, horasArray) {
     const query = `
-      SELECT fecha, hora
-      FROM tbl_reservaciones
-      WHERE (fecha >= ? AND fecha <= ?)
-      AND DAYOFWEEK(fecha) IN (?)
-      AND hora IN (?)
-      GROUP BY fecha, hora
-      HAVING SUM(estatus) < 2;
+    SELECT fecha, hora,
+      CASE 
+        WHEN SUM(estatus) >= 2 THEN 1  -- Full
+          ELSE 0  -- Available
+        END AS estatus
+    FROM tbl_reservaciones
+    WHERE (fecha >= ? AND fecha <= ?)
+    AND DAYOFWEEK(fecha) IN (?)
+    AND hora IN (?)
+    GROUP BY fecha, hora;
     `;
 
     const params = [fecha_inicio, fecha_fin, [...daysofweekArray], [...horasArray]]
