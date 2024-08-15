@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CampanaSelection from "../../components/crearCampanas/CampanaSelection"
 import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
-import ScheduleTable from "../../components/crearCampanas/ScheduleTable"
+import DaySelector from "../../components/crearCampanas/DaySelector"
+import SimboloAdvertencia from "../../assets/SimboloAdvertencia.svg"
+
 import './CrearCampana.css';
 
 function formatDate(date) {
@@ -11,50 +13,54 @@ function formatDate(date) {
   return `${year}-${month}-${day}`; // Formatear la fecha como YYYY-MM-DD
 }
 
-function getUniqueDaysFromHorarios() {
-
-}
-
-function getUniqueHoursFromHorarios() {
-
-}
-
 function CrearCampanas() {
   const [pantallas, setPantallas] = useState([]);
   const [pantallaSeleccionada, setPantallaSeleccionada] = useState(null);
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
-  const [horario, setHorario] = useState([]);
+  //const [horario, setHorario] = useState([]);
+  const [days, setDays] = useState([]);
+  const [hours, setHours] = useState([]);
+  const [dateRangeSelectorKey, setDateRangeSelectorKey] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(true);
-  const [cotizacion, setCotizacion] = useState(0);
+  //const [cotizacion, setCotizacion] = useState(0);
 
-  function calculateCotiacion() {
-    if (!fechaInicio || !fechaFin || !horario) {
-      setCotizacion(0);
-      return;
-    }
+  // function calculateCotiacion() {
+  //   if (!fechaInicio || !fechaFin || !horario) {
+  //     setCotizacion(0);
+  //     return;
+  //   }
 
-    const horariosArray = Object.values(horario);
-    let numberSpots = 0;
+  //   const horariosArray = Object.values(horario);
+  //   let numberSpots = 0;
 
-    for (let i = 0; i < horariosArray.length; i++) {
-      const hourSelectedDays = Object.values(horariosArray[i]);
+  //   for (let i = 0; i < horariosArray.length; i++) {
+  //     const hourSelectedDays = Object.values(horariosArray[i]);
 
-      for (let j = 0; j < hourSelectedDays.length; j++) {
-        if (typeof(hourSelectedDays[j]) !== 'string' && hourSelectedDays[j] === true) {
-          numberSpots++;
-        }
-      }
-    }
+  //     for (let j = 0; j < hourSelectedDays.length; j++) {
+  //       if (typeof(hourSelectedDays[j]) !== 'string' && hourSelectedDays[j] === true) {
+  //         numberSpots++;
+  //       }
+  //     }
+  //   }
 
-    const difference = fechaInicio.getTime() - fechaFin.getTime();
-    const duracion = Math.abs(difference / (1000 * 60 * 60 * 24)) + 1;
+  //   const difference = fechaInicio.getTime() - fechaFin.getTime();
+  //   const duracion = Math.abs(difference / (1000 * 60 * 60 * 24)) + 1;
   
-    setCotizacion(numberSpots * duracion * 4);
-  };
+  //   setCotizacion(numberSpots * duracion * 4);
+  // };
 
-  function handleHorarioChange(newHorario) {
-    setHorario(newHorario);
+  // function handleHorarioChange(newHorario) {
+  //   setHorario(newHorario);
+  // }
+
+  function calculatebudget() {
+    if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !days || !hours) {
+
+      return 0;
+    }
+
+    return 1;
   }
 
   function handlePantallaSelecionadaChange(newPantalla) {
@@ -64,27 +70,6 @@ function CrearCampanas() {
   function handleFechasChange(newFechaInicio, newFechaFin) {
     setFechaInicio(newFechaInicio);
     setFechaFin(newFechaFin);
-  }
-
-  async function handleCrearCampana() {
-    if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !horario) {
-      alert('Por favor asegurate de tener selecionada una pantalla, un rango de fechas y horarios');
-      return
-    }
-
-    try {
-      const url = import.meta.env.VITE_API_URL + `/api/crearCampana/${formatDate(fechaInicio)}/${formatDate(fechaFin)}/`;
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-    } catch (error) {
-      console.error('Error getting disponibilidad:', error);
-    }
-      
   }
 
   useEffect(() => {
@@ -104,32 +89,23 @@ function CrearCampanas() {
       }
     }
 
+    setDateRangeSelectorKey(Date.now());
+    console.log(dateRangeSelectorKey);
     fetchPantallasData();
   }, [])
-
-  useEffect(() => {
-    setHorario([]);
-  }, [pantallaSeleccionada]);
-
-  useEffect(() => {
-    setHorario([]);
-  }, [fechaInicio, fechaFin]);
-
-  useEffect(() => {
-    calculateCotiacion();
-  }, [horario]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const scheduleTableKey = `${pantallaSeleccionada?.id_pantalla}-${fechaInicio || 'no-fechaInicio'}-${fechaFin || 'no-fechaFin'}`;
+  //const scheduleTableKey = `${pantallaSeleccionada?.id_pantalla}-${fechaInicio || 'no-fechaInicio'}-${fechaFin || 'no-fechaFin'}`;
 
-  console.log('horario', horario);
+  console.log(fechaInicio);
 
   return (
     <div className="creacion-campana-container">
       <div className="edicion-campana-container">
+        <h3>Pantallas</h3>
         <div>
           <CampanaSelection 
             pantallas={pantallas}
@@ -139,33 +115,40 @@ function CrearCampanas() {
         </div>
         {pantallaSeleccionada && (
           <>
+            <h3>Fechas</h3>
             <div>
               <DateRangeSelector 
+                key={dateRangeSelectorKey}
                 handleFechasChange={handleFechasChange}
               />
             </div>
+            <h3>Días</h3>
             <div>
-              <ScheduleTable 
-                key={scheduleTableKey}
-                startTime={pantallaSeleccionada.hora_inicio} 
-                endTime={pantallaSeleccionada.hora_fin} 
-                startDay={fechaInicio}
-                endDay={fechaFin}
-                handleHorarioChange={handleHorarioChange}
-              />
+              <DaySelector/>
             </div>
+            <h3>Horarios</h3>
             <div>
-              <h3>Lugar para subir las cosas</h3>
+          	  <select name="" id="">
+                <option value=""></option>
+                <option value=""></option>
+              </select>
+            </div>
+            <h3>Arte</h3>
+            <div>
+              <p>Lugar para subir las cosas </p>
             </div>
           </>
         )}
       </div>
       <div className="cotizacion-campana-container">
-        <p>Campaña sujeta a revision</p>
-        <p>costo por spot: </p>
-        <strong>Cotizacion</strong>
-        <p>{cotizacion} pesos</p>
-        <button>crear campana</button>
+        <div>
+          <img src={SimboloAdvertencia} alt="simbolo de advertencia" />
+          <p>Arte bajo revisión por términos aceptados</p>
+        </div>
+        
+        <p>$4 pesos por hora</p>
+        <p>$ {calculatebudget} pesos</p>
+        <button>solicitar fechas</button>
       </div>
     </div>
   );

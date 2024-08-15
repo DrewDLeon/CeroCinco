@@ -1,11 +1,24 @@
 .campana-selection-container{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  margin-right: 25px;
 }
 
 .campana-selection-select-container{
-  width: 260px;
+  width: 230px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+
+  select {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
 }
 .campana-selection-image{
   height: 230px;
@@ -15,10 +28,10 @@
 .campana-selection-text{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: top;
+  align-items: left;
 
   p{
-    text-align: center;
+    text-align: left;
   }
 }
