@@ -45,3 +45,51 @@
     cursor: pointer;
   }
 }
+
+.days-container{
+  display: flex;
+  flex-wrap: wrap;
+  flex: row;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-selector {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #000000;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 700;
+  width: 80px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.day-selector.selected {
+  background-color: var(--secondary);
+  color: #ffffff;
+}
+
+.hour-selector {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 5px;
+  text-align: center;
+  width: 60px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hour-selector.selected {
+  background-color: var(--secondary);
+  color: #ffffff;
+}

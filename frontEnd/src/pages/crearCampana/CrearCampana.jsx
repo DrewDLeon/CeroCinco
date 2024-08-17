@@ -1,61 +1,24 @@
 import React, { useState, useEffect } from "react";
 import CampanaSelection from "../../components/crearCampanas/CampanaSelection"
 import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
-import DaySelector from "../../components/crearCampanas/DaySelector"
+import MediaUpload from "../../components/crearCampanas/MediaUpload"
 import SimboloAdvertencia from "../../assets/SimboloAdvertencia.svg"
 
 import './CrearCampana.css';
-
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth()
-  const day = date.getDay();
-  return `${year}-${month}-${day}`; // Formatear la fecha como YYYY-MM-DD
-}
 
 function CrearCampanas() {
   const [pantallas, setPantallas] = useState([]);
   const [pantallaSeleccionada, setPantallaSeleccionada] = useState(null);
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
-  //const [horario, setHorario] = useState([]);
-  const [days, setDays] = useState([]);
-  const [hours, setHours] = useState([]);
+  const [days, setDays] = useState(Array(7).fill(-1));
+  const [selectedHours, setSelectedHours] = useState([]);
   const [dateRangeSelectorKey, setDateRangeSelectorKey] = useState(Date.now());
   const [isLoading, setIsLoading] = useState(true);
   //const [cotizacion, setCotizacion] = useState(0);
 
-  // function calculateCotiacion() {
-  //   if (!fechaInicio || !fechaFin || !horario) {
-  //     setCotizacion(0);
-  //     return;
-  //   }
-
-  //   const horariosArray = Object.values(horario);
-  //   let numberSpots = 0;
-
-  //   for (let i = 0; i < horariosArray.length; i++) {
-  //     const hourSelectedDays = Object.values(horariosArray[i]);
-
-  //     for (let j = 0; j < hourSelectedDays.length; j++) {
-  //       if (typeof(hourSelectedDays[j]) !== 'string' && hourSelectedDays[j] === true) {
-  //         numberSpots++;
-  //       }
-  //     }
-  //   }
-
-  //   const difference = fechaInicio.getTime() - fechaFin.getTime();
-  //   const duracion = Math.abs(difference / (1000 * 60 * 60 * 24)) + 1;
-  
-  //   setCotizacion(numberSpots * duracion * 4);
-  // };
-
-  // function handleHorarioChange(newHorario) {
-  //   setHorario(newHorario);
-  // }
-
   function calculatebudget() {
-    if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !days || !hours) {
+    if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !days || !selectedHours) {
 
       return 0;
     }
@@ -70,6 +33,32 @@ function CrearCampanas() {
   function handleFechasChange(newFechaInicio, newFechaFin) {
     setFechaInicio(newFechaInicio);
     setFechaFin(newFechaFin);
+  }
+
+  function toggleDay(index) {
+    const newDays = [...days];
+    newDays[index] = newDays[index] === 1 ? -1 : 1;
+    setDays(newDays);
+  }
+
+  function generateTimeSlots(start, end) {
+    const times = [];
+    let currentTime = new Date(`1970-01-01T${start}`);
+    const endTime = new Date(`1970-01-01T${end}`);
+  
+    while (currentTime <= endTime) {
+      times.push(currentTime.toTimeString().slice(0, 5)); // Formato "HH:MM"
+      currentTime.setHours(currentTime.getHours() + 1); // Incrementar en 1 hora
+    }
+  
+    return times;
+  }
+
+  function toggleHour(hour) {
+    const newSelectedHours = selectedHours.includes(hour)
+      ? selectedHours.filter(h => h !== hour)
+      : [...selectedHours, hour];
+    setSelectedHours(newSelectedHours);
   }
 
   useEffect(() => {
@@ -98,59 +87,75 @@ function CrearCampanas() {
     return <div>Loading...</div>;
   }
 
-  //const scheduleTableKey = `${pantallaSeleccionada?.id_pantalla}-${fechaInicio || 'no-fechaInicio'}-${fechaFin || 'no-fechaFin'}`;
+  const availableHours = pantallaSeleccionada ? generateTimeSlots(pantallaSeleccionada.hora_inicio, pantallaSeleccionada.hora_fin) : [];
 
   console.log(fechaInicio);
+  console.log(fechaFin);
+  console.log(days);
+  console.log(pantallaSeleccionada);
+  console.log(selectedHours);
+
+  const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
   return (
-    <div className="creacion-campana-container">
-      <div className="edicion-campana-container">
-        <h3>Pantallas</h3>
-        <div>
-          <CampanaSelection 
-            pantallas={pantallas}
-            pantallaSeleccionada={pantallaSeleccionada}
-            handlePantallaSelecionadaChange={handlePantallaSelecionadaChange}
-          />
+    <>
+      <div className="creacion-campana-container">
+        <div className="edicion-campana-container">
+          <h3>Pantallas</h3>
+          <div>
+            <CampanaSelection 
+              pantallas={pantallas}
+              pantallaSeleccionada={pantallaSeleccionada}
+              handlePantallaSelecionadaChange={handlePantallaSelecionadaChange}
+            />
+          </div>
+          {pantallaSeleccionada && (
+            <>
+              <h3>Fechas</h3>
+              <div>
+                <DateRangeSelector 
+                  key={dateRangeSelectorKey}
+                  handleFechasChange={handleFechasChange}
+                />
+              </div>
+              <h3>Días</h3>
+              <div className="days-container">
+                {dayNames.map((day, index) => (
+                  <div key={index}onClick={() => toggleDay(index)}
+                    className={`day-selector ${days[index] === 1 ? 'selected' : ''}`}
+                  >
+                    {day}
+                  </div>
+                ))}
+              </div>
+              <h3>Horarios</h3>
+              <div>
+                {availableHours.map(hour => (
+                    <div key={hour}onClick={() => toggleHour(hour)}
+                      className={`hour-selector ${selectedHours.includes(hour) ? 'selected' : ''}`}
+                    >
+                      {hour}
+                    </div>
+                  ))}
+              </div>
+              <h3>Arte</h3>
+              <div>
+                <MediaUpload pantallaSeleccionada={pantallaSeleccionada} />
+              </div>
+            </>
+          )}
         </div>
-        {pantallaSeleccionada && (
-          <>
-            <h3>Fechas</h3>
-            <div>
-              <DateRangeSelector 
-                key={dateRangeSelectorKey}
-                handleFechasChange={handleFechasChange}
-              />
-            </div>
-            <h3>Días</h3>
-            <div>
-              <DaySelector/>
-            </div>
-            <h3>Horarios</h3>
-            <div>
-          	  <select name="" id="">
-                <option value=""></option>
-                <option value=""></option>
-              </select>
-            </div>
-            <h3>Arte</h3>
-            <div>
-              <p>Lugar para subir las cosas </p>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="cotizacion-campana-container">
-        <div>
-          <img src={SimboloAdvertencia} alt="simbolo de advertencia" />
-          <p>Arte bajo revisión por términos aceptados</p>
+        <div className="cotizacion-campana-container">
+          <div>
+            <img src={SimboloAdvertencia} alt="simbolo de advertencia" />
+            <p>Arte bajo revisión por términos aceptados</p>
+          </div>
+          <p>$4 pesos por hora</p>
+          <p>$ {calculatebudget} pesos</p>
+          <button>solicitar fechas</button>
         </div>
-        
-        <p>$4 pesos por hora</p>
-        <p>$ {calculatebudget} pesos</p>
-        <button>solicitar fechas</button>
       </div>
-    </div>
+    </>
   );
 }
 
