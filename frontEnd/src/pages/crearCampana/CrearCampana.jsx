@@ -3,6 +3,7 @@ import CampanaSelection from "../../components/crearCampanas/CampanaSelection"
 import DateRangeSelector from "../../components/crearCampanas/DateRangeSelector"
 import MediaUpload from "../../components/crearCampanas/MediaUpload"
 import SimboloAdvertencia from "../../assets/SimboloAdvertencia.svg"
+import axios from 'axios';
 
 import './CrearCampana.css';
 
@@ -14,6 +15,7 @@ function CrearCampanas() {
   const [days, setDays] = useState(Array(7).fill(-1));
   const [selectedHours, setSelectedHours] = useState([]);
   const [dateRangeSelectorKey, setDateRangeSelectorKey] = useState(Date.now());
+  const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   //const [cotizacion, setCotizacion] = useState(0);
 
@@ -33,6 +35,48 @@ function CrearCampanas() {
   function handleFechasChange(newFechaInicio, newFechaFin) {
     setFechaInicio(newFechaInicio);
     setFechaFin(newFechaFin);
+  }
+
+  function handleFilesChange(newFiles) {
+    setFiles(newFiles);
+  }
+
+  async function handleUpload() {
+    if (files.length === 0) {
+      alert("Por favor, selecciona al menos un archivo.");
+      return;
+    }
+  
+    const formData = new FormData();
+    
+    // Añadir cada archivo al FormData
+    files.forEach((file, index) => {
+      formData.append(`file${index}`, file);
+    });
+  
+    // Añadir otros datos necesarios
+    formData.append('pantallaId', pantallaSeleccionada.id);
+    formData.append('fechaInicio', fechaInicio.toISOString());
+    formData.append('fechaFin', fechaFin.toISOString());
+    formData.append('dias', JSON.stringify(days));
+    formData.append('horas', JSON.stringify(selectedHours));
+  
+    // Imprimir el contenido del FormData en la consola
+    console.log("Datos que se enviarían al backend:");
+    for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        console.log(key, ':', {
+          name: value.name,
+          type: value.type,
+          size: value.size + ' bytes'
+        });
+      } else {
+        console.log(key, ':', value);
+      }
+    }
+  
+    // Aquí iría la lógica real de envío al backend cuando esté implementada
+    console.log("Simulando envío al backend...");
   }
 
   function toggleDay(index) {
@@ -89,11 +133,19 @@ function CrearCampanas() {
 
   const availableHours = pantallaSeleccionada ? generateTimeSlots(pantallaSeleccionada.hora_inicio, pantallaSeleccionada.hora_fin) : [];
 
-  console.log(fechaInicio);
-  console.log(fechaFin);
-  console.log(days);
+  console.log("---------------------")
+  console.log("Pantalla seleccionada");
   console.log(pantallaSeleccionada);
+  console.log("Fecha Inicio");
+  console.log(fechaInicio);
+  console.log("Fecha fin");
+  console.log(fechaFin);
+  console.log("Dias");
+  console.log(days);
+  console.log("Horas");
   console.log(selectedHours);
+  console.log("files");
+  console.log(files);
 
   const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
@@ -140,7 +192,10 @@ function CrearCampanas() {
               </div>
               <h3>Arte</h3>
               <div>
-                <MediaUpload pantallaSeleccionada={pantallaSeleccionada} />
+                <MediaUpload 
+                  pantallaSeleccionada={pantallaSeleccionada} 
+                  onFilesChange={handleFilesChange}
+                />
               </div>
             </>
           )}
@@ -152,7 +207,7 @@ function CrearCampanas() {
           </div>
           <p>$4 pesos por hora</p>
           <p>$ {calculatebudget} pesos</p>
-          <button>solicitar fechas</button>
+          <button onClick={handleUpload} >solicitar fechas</button>
         </div>
       </div>
     </>
