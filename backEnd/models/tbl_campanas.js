@@ -54,6 +54,25 @@ const tbl_campanas = {
     console.log(rows)
     return rows;
   },
+  createCampana: async function(campanasData) {
+    const values = campanasData.map(data => 
+      `(${data.id_usuario}, ${data.id_pantalla}, '${data.fecha_inicio}', '${data.fecha_fin}', '${data.weekdays}', ${data.estatus}, ${data.nombre_campaña}, ${data.ruta_arte} ${data.costo})`
+    ).join(', ');
+
+    const query = `
+      INSERT INTO tbl_campanas (id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campaña, ruta_arte, costo)
+      VALUES ${values};
+    `;
+
+    try {
+      const [result] = await db.query(query);
+      return result;
+    } catch (error) {
+      console.error('Error insertando campañas:', error);
+      throw error;
+    }
+
+  },
 
   // ADMIN FUNCTIONS
   getCampanasAdmin: async function() {
