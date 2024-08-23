@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { DateRange } from 'react-date-range';
 import { addDays } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -13,7 +13,7 @@ const DateRangeSelector = ({ onChange, handleFechasChange }) => {
   const [state, setState] = useState([
     {
       startDate: minSelectableDate,
-      endDate: addDays(minSelectableDate, 7),
+      endDate: addDays(minSelectableDate, 0),
       key: 'selection'
     }
   ]);
@@ -25,6 +25,10 @@ const DateRangeSelector = ({ onChange, handleFechasChange }) => {
       onChange(ranges.selection);
     }
   };
+
+  // useEffect(() => {
+  //   handleFechasChange(startDate, endDate);
+  // }, [])
 
   return (
     <DateRange

@@ -7,21 +7,89 @@
 .edicion-campana-container{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   gap: 40px;
-  /* background-color: blue; */
-  width: calc(100% - 250px - 40px); /*250px for the lateral popup width and 40px to have space between*/
-  border: 1px solid black;
+  width: calc(100% - 260px - 50px); /*250px for the lateral popup width and 40px to have space between*/
   overflow: auto;
+  padding: 10px;
 }
 
 
 .cotizacion-campana-container{
   position: absolute;
-  border: 1px solid black;
-  /* background-color: red; */
-  width: 250px;
+  /* border: 1px solid black; */
+  width: 260px;
   height: 500px;
   top: 0;
   right: 0;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border: 2px solid #fbee79;
+    align-items: center;
+    justify-content: center;
+
+    p {
+      font-weight: 600;
+    }
+  }
+
+  button {
+    margin-top: auto;
+    width: 100%;
+    font-size: large;
+    cursor: pointer;
+  }
+}
+
+.days-container{
+  display: flex;
+  flex-wrap: wrap;
+  flex: row;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.day-selector {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #000000;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 700;
+  width: 80px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.day-selector.selected {
+  background-color: var(--secondary);
+  color: #ffffff;
+}
+
+.hour-selector {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  color: #000000;
+  font-weight: 700;
+  border-radius: 5px;
+  text-align: center;
+  width: 60px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hour-selector.selected {
+  background-color: var(--secondary);
+  color: #ffffff;
 }
