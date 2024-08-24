@@ -34,7 +34,7 @@ const tbl_campanas = {
 
     return rows;
   },
-  getDisponibilidadCampana: async function(fecha_inicio, fecha_fin, daysofweekArray, horasArray) {
+  getDisponibilidadCampana: async function(fecha_inicio, fecha_fin, daysofweekArray, horasArray, id_pantalla) {
     const query = `
     SELECT fecha, hora,
       CASE 
@@ -45,32 +45,41 @@ const tbl_campanas = {
     WHERE (fecha >= ? AND fecha <= ?)
     AND DAYOFWEEK(fecha) IN (?)
     AND hora IN (?)
+    AND id_pantalla = ?
     GROUP BY fecha, hora;
     `;
 
-    const params = [fecha_inicio, fecha_fin, [...daysofweekArray], [...horasArray]]
+    const params = [fecha_inicio, fecha_fin, [...daysofweekArray], [...horasArray], id_pantalla]
 
     const [rows] = await db.query(query, params)
     console.log(rows)
     return rows;
   },
-  createCampana: async function(campanasData) {
-    const values = campanasData.map(data => 
-      `(${data.id_usuario}, ${data.id_pantalla}, '${data.fecha_inicio}', '${data.fecha_fin}', '${data.weekdays}', ${data.estatus}, ${data.nombre_campaña}, ${data.ruta_arte} ${data.costo})`
-    ).join(', ');
+  createCampana: async function(id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, ruta_arte, costo) {
 
     const query = `
-      INSERT INTO tbl_campanas (id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campaña, ruta_arte, costo)
-      VALUES ${values};
+      INSERT INTO tbl_campanas 
+      (id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campaña, ruta_arte, costo)
+      VALUES
+      (?, ?, ?, ?, ?, ?, ?, ?, ?)};
     `;
 
     try {
-      const [result] = await db.query(query);
-      return result;
+      const answer = await db.query(query, [id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, ruta_arte, costo]);
+      return answer
     } catch (error) {
       console.error('Error insertando campañas:', error);
       throw error;
     }
+
+  },
+  getCampana: async function(id_usuario, id_pantalla, nombre_campana) {
+
+    const query = `
+      SELECT * FROM tbl_campanas WHERE id_usuario = ? AND id_pantalla = ? AND nombre_campaña = ?;
+    `;
+    const [rows] = await db.query(query, [id_usuario, id_pantalla, nombre_campana]);
+    return rows[0];
 
   },
 
