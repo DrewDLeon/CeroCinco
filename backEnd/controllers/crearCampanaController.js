@@ -68,21 +68,54 @@ const crearCampanaController = {
           console.log("Imagen procesada correctamente");
 
           //Revisar si la campaña ya existe
-          const {id_usuario, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, costo, id_pantalla} = req.body
+          const {id_usuario, fecha_inicio, fecha_fin, weekdays, horas, estatus, nombre_campana, costo, id_pantalla} = req.body
           
           const campana = await tbl_campanas.getCampana(id_usuario, id_pantalla, nombre_campana);
 
           if (campana) {
             return res.status(401).json({ message: 'Campaña ya existente' });
           }
-
+          
           // Crear Campaña
-          const crearCampana = await tbl_campanas.createCampana(id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, filePath, costo)
+          const crearCampana = await tbl_campanas.createCampana(id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, filename, costo)
           if (crearCampana) {
             console.log('Campana creada')
           }
 
+          const daysofweekArray = weekdays.split(',').map(Number);
+          const horasArray = horas.split(',').map(Number);
+
           // GET DISPONIBILIDAD fecha_inicio, fecha_fin, daysofweek, horas
+          const disponibilidad = await tbl_campanas.getDisponibilidadCampana(fecha_inicio, fecha_fin, daysofweekArray, horasArray, id_pantalla);
+          const disponibilidadChanged = disponibilidad.map(item => ({
+            ...item,
+            fecha: new Date(item.fecha).toISOString().split('T')[0]
+          }));
+
+          let id_campana = await tbl_campanas.getCampana(id_usuario, id_pantalla, nombre_campana);
+          id_campana = id_campana.id_campaña
+
+          console.log(id_campana)
+          console.log(id_pantalla)
+          console.log(disponibilidadChanged)
+
+          // INSERTAR RESERVACIONES EN LA BASE DE DATOS
+          try {
+            console.log("Reservacion creada");
+            const reservaciones = await tbl_reservaciones.createReservaciones(id_campana, id_pantalla, disponibilidadChanged);
+            console.log("Reservacion creada")
+            if (reservaciones) {
+              console.log("Reservacion creada")
+            }
+            res.status(200);
+          } catch (error) {
+            res.status(405).send({
+              message: 'Error en insertar las reservaciones'
+            })
+          }
+          
+
+          
 
 
 

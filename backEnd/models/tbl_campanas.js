@@ -52,7 +52,6 @@ const tbl_campanas = {
     const params = [fecha_inicio, fecha_fin, [...daysofweekArray], [...horasArray], id_pantalla]
 
     const [rows] = await db.query(query, params)
-    console.log(rows)
     return rows;
   },
   createCampana: async function(id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, ruta_arte, costo) {
@@ -61,7 +60,7 @@ const tbl_campanas = {
       INSERT INTO tbl_campanas 
       (id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campaña, ruta_arte, costo)
       VALUES
-      (?, ?, ?, ?, ?, ?, ?, ?, ?)};
+      (?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
 
     try {
@@ -76,7 +75,7 @@ const tbl_campanas = {
   getCampana: async function(id_usuario, id_pantalla, nombre_campana) {
 
     const query = `
-      SELECT * FROM tbl_campanas WHERE id_usuario = ? AND id_pantalla = ? AND nombre_campaña = ?;
+      SELECT id_campaña FROM tbl_campanas WHERE id_usuario = ? AND id_pantalla = ? AND nombre_campaña = ?;
     `;
     const [rows] = await db.query(query, [id_usuario, id_pantalla, nombre_campana]);
     return rows[0];
