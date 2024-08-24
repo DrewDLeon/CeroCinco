@@ -1,0 +1,108 @@
+.gestion-usuarios-container {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.gestion-usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.gestion-usuarios-table th, 
+.gestion-usuarios-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.gestion-usuarios-table th {
+    background-color: #f4f4f4;
+}
+
+.gestion-usuarios-input {
+    width: 100%;
+    padding: 8px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.gestion-usuarios-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.gestion-usuarios-save-button,
+.gestion-usuarios-cancel-button,
+.gestion-usuarios-edit-button,
+.gestion-usuarios-delete-button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.gestion-usuarios-save-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.gestion-usuarios-cancel-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.gestion-usuarios-edit-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.gestion-usuarios-delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.gestion-usuarios-save-button:hover {
+    background-color: #45a049;
+}
+
+.gestion-usuarios-cancel-button:hover {
+    background-color: #e41e1e;
+}
+
+.gestion-usuarios-edit-button:hover {
+    background-color: #0069d9;
+}
+
+.gestion-usuarios-delete-button:hover {
+    background-color: #c82333;
+}
+
+.gestion-usuarios-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.gestion-usuarios-filter-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.gestion-usuarios-filter-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+}

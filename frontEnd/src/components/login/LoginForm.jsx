@@ -27,10 +27,14 @@ function LoginForm() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('admin', data.admin);
 
-        const isAdmin = localStorage.getItem('admin') === '1';
+        const role = localStorage.getItem('admin');
+
+        console.log(role);
         
-        if (isAdmin) {
+        if (role === '1') {
           navigate('/AdminCampanas');
+        } else if (role === '2') {
+          navigate('/adminCrearUsuario'); // Define una ruta específica para 'owner'
         } else {
           navigate('/miscampañas');
         }

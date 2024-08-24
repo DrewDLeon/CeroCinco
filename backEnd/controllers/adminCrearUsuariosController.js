@@ -22,6 +22,15 @@ const adminCrearUsuariosController =  {
       console.error('Error en la creación de usuario:', error);
       res.status(500).json({ message: "Error creando usuario" });
     }
+  },
+  getAll: async (req, res) => {
+    try {
+      const users = await tbl_usuarios.getAll();
+      res.status(200).json(users);
+
+    } catch (error) {
+      res.status(500).json({message: "Error recolectando usuarios"})
+    }
   }
 }
 

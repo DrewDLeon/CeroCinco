@@ -16,6 +16,11 @@ const tbl_usuarios = {
     `;
     const answer = await db.query(query, [username, password, admin]);
     return answer;
+  },
+  getAll: async function () {
+    const query = `SELECT * FROM tbl_usuarios`;
+    const rows = await db.query(query, []);
+    return rows;
   }
 };
 

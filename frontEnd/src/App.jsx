@@ -6,19 +6,29 @@ import MisCampanas from './pages/misCampanas/MisCampanas';
 import Impactos from './pages/impactos/Impactos';
 import CrearCampanas from './pages/crearCampana/CrearCampana';
 import AdminCampanas from './pages/adminCampanas/AdminCampanas';
-import AdminCrearUsuario from './pages/adminCrearUsuario/AdminCrearUsuario'
+import AdminCrearUsuario from './pages/adminCrearUsuario/AdminCrearUsuario';
+import AdminGestionUsuarios from './pages/adminGestionUsuarios/AdminGestionUsuarios';
+import AdminGestionPantallas from './pages/adminGestionPantallas/AdminGestionPantallas';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import './App.css';
 
 const RedirectBasedOnRole = () => {
   const token = localStorage.getItem('token');
-  const isAdmin = localStorage.getItem('admin') === '1';
+  const role = localStorage.getItem('admin');
 
   if (!token) {
     return <Navigate to="/login" replace />;
   }
 
-  return isAdmin ? <Navigate to="/admin" replace /> : <Navigate to="/MisCampañas" replace />;
+  if (role === '2') {
+    return <Navigate to="/OwnerDashboard" replace />;
+  }
+
+  if (role === '1') {
+    return <Navigate to="/admin" replace />;
+  }
+
+  return <Navigate to="/MisCampañas" replace />;
 };
 
 function App() {
@@ -70,9 +80,29 @@ function App() {
         <Route
           path="/adminCrearUsuario"
           element={
-            <PrivateRoute adminRoute>
+            <PrivateRoute ownerRoute>
               <MainLayout>
                 <AdminCrearUsuario />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/adminGestionUsuarios"
+          element={
+            <PrivateRoute ownerRoute>
+              <MainLayout>
+                <AdminGestionUsuarios />
+              </MainLayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/adminGestionPantallas"
+          element={
+            <PrivateRoute ownerRoute>
+              <MainLayout>
+                <AdminGestionPantallas />
               </MainLayout>
             </PrivateRoute>
           }

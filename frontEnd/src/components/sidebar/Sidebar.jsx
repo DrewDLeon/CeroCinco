@@ -3,13 +3,41 @@ import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
 function Sidebar() {
-  const isAdmin = localStorage.getItem('admin') === '1';
+  const role = localStorage.getItem('admin'); // El rol es '0' para user, '1' para admin, '2' para owner
 
   return (
     <nav className="sidebar">
       <ul>
-        {/*Navbar items cuando el perfil es admin*/}
-        {isAdmin && (
+        {/* Navbar items para el perfil 'owner' */}
+        {role === '2' && (
+          <>
+            <li className="sidebar-list-item-container">
+              <NavLink
+                to="/adminCrearUsuario"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                Crear usuario
+              </NavLink>
+            </li>
+            <li className="sidebar-list-item-container">
+              <NavLink
+                to="/adminGestionUsuarios"
+                className={({ isActive }) => (isActive ? 'active' : '')}
+              >
+                Gestionar Usuarios
+              </NavLink>
+            </li>
+            <li className="sidebar-list-item-container">
+              <NavLink 
+                to="/adminGestionPantallas" 
+                className={({ isActive }) => isActive ? 'active' : ''}>
+                Gestionar Pantallas
+              </NavLink>
+            </li>
+          </>
+        )}
+        {/* Navbar items para el perfil 'admin' */}
+        {role === '1' && (
           <>
             <li className="sidebar-list-item-container">
               <NavLink
@@ -19,18 +47,10 @@ function Sidebar() {
                 Admin Panel
               </NavLink>
             </li>
-            <li className="sidebar-list-item-container">
-              <NavLink
-                to="/adminCrearUsuario"
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                Crear usuario
-              </NavLink>
-            </li>
           </>
         )}
-        {/*Navbar items cuando el perfil no es admin*/}
-        {!isAdmin && (
+        {/* Navbar items para el perfil 'user' */}
+        {role === '0' && (
           <>
             <li className="sidebar-list-item-container">
               <NavLink 

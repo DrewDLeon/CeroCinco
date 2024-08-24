@@ -11,6 +11,7 @@ const misCampanasRoutes = require('./routes/misCampanasRoutes');
 const adminCampanasRoutes = require('./routes/adminCampanasRoutes'); 
 const crearCampanaRoutes = require('./routes/crearCampanaRoutes'); 
 const adminCrearUsuariosRoutes = require('./routes/adminCrearUsuarioRoutes')
+const adminGestionPantallas = require("./routes/adminGestionPantallasRoutes")
 
 // Crear instancia de la aplicación Express
 const app = express();
@@ -36,6 +37,7 @@ app.use('/api/campanas', misCampanasRoutes);
 app.use('/api/adminCampanas', adminCampanasRoutes);
 app.use('/api/crearCampana', crearCampanaRoutes);
 app.use('/api/adminCrearUsuarios', adminCrearUsuariosRoutes);
+app.use('/api/adminGestionPantallas', adminGestionPantallas);
 
 // Conectar a la base de datos y manejar errores
 db.getConnection()
