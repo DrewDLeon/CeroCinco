@@ -1,0 +1,73 @@
+.modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .modal-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .available-spots,
+  .unavailable-spots,
+  .cotizacion {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+  }
+  
+  .modal-button {
+    background-color: var(--secondary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .modal-button:hover {
+    background-color: #37ca92;
+  }
+  
+  .modal-details {
+    padding: 20px;
+  }
+  
+  .details-title {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .details-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .details-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+  }
+
+  .status-available {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-unavailable {
+    color: red;
+    font-weight: bold;
+  }

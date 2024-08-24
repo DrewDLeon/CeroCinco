@@ -24,7 +24,7 @@ function CampanaSelection({pantallas, pantallaSeleccionada, handlePantallaSeleci
   } else if(pantallaSeleccionada.id_pantalla === 3) {
     pantallaImage = Panel410Photo;
   }
-
+  
   return(
     <>
     <div className='campana-selection-container'>
@@ -48,7 +48,9 @@ function CampanaSelection({pantallas, pantallaSeleccionada, handlePantallaSeleci
           <strong>Duración por aparición</strong>
           <p>{pantallaSeleccionada.duracion_pantalla} segundos</p>
           <strong>Numero de apariciones por hora</strong>
-          <p>{pantallaSeleccionada.duracion_pantalla} hacer los calculos basados en los segundos</p>
+          <p>{3600 / (pantallaSeleccionada.duracion_pantalla * 10)} apariciones</p>
+          <strong>Medidas de la pantalla</strong>
+          <p>{pantallaSeleccionada.medidas_pantalla}</p>
       </div>
     </div>
     </>

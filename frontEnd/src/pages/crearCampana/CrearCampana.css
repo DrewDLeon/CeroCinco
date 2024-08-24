@@ -15,37 +15,93 @@
 }
 
 
-.cotizacion-campana-container{
+.cotizacion-campana-container {
   position: absolute;
-  /* border: 1px solid black; */
   width: 260px;
   height: 500px;
   top: 0;
   right: 0;
   padding: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-
-  div {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    border: 2px solid #fbee79;
-    align-items: center;
-    justify-content: center;
-
-    p {
-      font-weight: 600;
-    }
-  }
-
-  button {
-    margin-top: auto;
-    width: 100%;
-    font-size: large;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 8px;
+  text-align: center;
 }
 
+.cotizacion-campana-container .advertencia-section {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  border: 2px solid #fbee79;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #fff7cc;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.cotizacion-campana-container .advertencia-section img {
+  width: 45px;
+  height: 45px;
+}
+
+.cotizacion-campana-container .advertencia-section p {
+  font-weight: 600;
+  color: #d79f00;
+  margin: 0;
+  font-size: 16px;
+}
+
+.cotizacion-campana-container h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #333333;
+}
+
+.cotizacion-campana-container p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.cotizacion-campana-container .cotizacion-section {
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cotizacion-campana-container .cotizacion-section h4 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.cotizacion-campana-container .cotizacion-section p {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cotizacion-campana-container .cotizacion-boton {
+  margin-top: auto;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  background-color: var(--secondary);
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cotizacion-campana-container .cotizacion-boton:hover {
+  background-color: #37ca92;
+}
 .days-container{
   display: flex;
   flex-wrap: wrap;
@@ -92,4 +148,54 @@
 .hour-selector.selected {
   background-color: var(--secondary);
   color: #ffffff;
+}
+
+.modal-title-input {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.modal-title-input:focus {
+  outline: none;
+  border-bottom: 2px solid #007bff;
+}
+
+.modal-body .emphasis {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.modal-body .cotizacion {
+  color: #e74c3c;
+}
+
+.modal-footer .modal-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-footer .modal-button:hover {
+  background-color: #0056b3;
+}
+
+.status-available {
+  color: green;
+  font-weight: bold;
+}
+
+.status-unavailable {
+  color: red;
+  font-weight: bold;
 }

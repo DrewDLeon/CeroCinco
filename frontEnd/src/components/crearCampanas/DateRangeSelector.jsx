@@ -7,8 +7,8 @@ import 'react-date-range/dist/theme/default.css';
 import './DateRangeSelector.css';
 
 const DateRangeSelector = ({ onChange, handleFechasChange }) => {
-  // Calculate the minimum selectable date (7 days from today)
-  const minSelectableDate = useMemo(() => addDays(new Date(), 7), []);
+  // Calculate the minimum selectable date (3 days from today)
+  const minSelectableDate = useMemo(() => addDays(new Date(), 3), []);
 
   const [state, setState] = useState([
     {
@@ -26,9 +26,10 @@ const DateRangeSelector = ({ onChange, handleFechasChange }) => {
     }
   };
 
-  // useEffect(() => {
-  //   handleFechasChange(startDate, endDate);
-  // }, [])
+  useEffect(() => {
+    // Call handleFechasChange with the initial date range when the component mounts
+    handleFechasChange(state[0].startDate, state[0].endDate);
+  }, [state, handleFechasChange]);
 
   return (
     <DateRange
