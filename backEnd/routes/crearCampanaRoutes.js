@@ -15,4 +15,4 @@ router.post('/testImage', upload.single('image'), crearCampanaController.testIma
 module.exports = router;
 
 
-const {id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, costo} = req.body
+// const {id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, costo} = req.body
