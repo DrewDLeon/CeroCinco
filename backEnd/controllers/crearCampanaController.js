@@ -68,7 +68,7 @@ const crearCampanaController = {
           console.log("Imagen procesada correctamente");
 
           //Revisar si la campaña ya existe
-          const {id_usuario, id_pantalla, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, costo} = req.body
+          const {id_usuario, fecha_inicio, fecha_fin, weekdays, estatus, nombre_campana, costo, id_pantalla} = req.body
           
           const campana = await tbl_campanas.getCampana(id_usuario, id_pantalla, nombre_campana);
 
@@ -83,7 +83,7 @@ const crearCampanaController = {
           }
 
           // GET DISPONIBILIDAD fecha_inicio, fecha_fin, daysofweek, horas
-          
+
 
 
 
