@@ -141,6 +141,9 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
     return null;
   }
 
+  console.log(campana);
+  const imageUrl = `${import.meta.env.VITE_API_URL}/uploads/${campana.ruta_arte}`;
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -151,11 +154,11 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
           <div>
             <h2>{campana.nombre_campaña}</h2>
             <div className="modal-info">
-              <img src={currentPanelPhoto} alt="imagen de panel" className='campaña-panel-image'/>
+              <img src={imageUrl} alt="imagen de panel" className='campaña-panel-image'/>
               <div className="modal-text-data">
                 <p><b>Pantalla:</b> {campana.nombre_pantalla}</p>
                 <p><b>Referencia pago:</b> {campana.id_campaña}</p>
-                <p><b>Precio:</b> {/*campana.usuario*/} $$$$$$</p>
+                <p><b>Precio:</b> {campana.costo}</p>
                 <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
                 <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
                 <p><b>Fecha de Fin:</b> {formatDate(campana.fecha_fin)}</p>

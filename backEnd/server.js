@@ -4,33 +4,33 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./config/db');
 const config = require('./config/config');
+const path = require('path');
+
+// Importing route modules
 const authRoutes = require('./routes/authRoutes');
 const pantallasRoutes = require('./routes/pantallasRoutes');
 const impactosRoutes = require('./routes/impactosRoutes');
 const misCampanasRoutes = require('./routes/misCampanasRoutes');
 const adminCampanasRoutes = require('./routes/adminCampanasRoutes'); 
 const crearCampanaRoutes = require('./routes/crearCampanaRoutes'); 
-const adminCrearUsuariosRoutes = require('./routes/adminCrearUsuarioRoutes')
-const adminGestionPantallas = require("./routes/adminGestionPantallasRoutes")
+const adminCrearUsuariosRoutes = require('./routes/adminCrearUsuarioRoutes');
+const adminGestionPantallas = require("./routes/adminGestionPantallasRoutes");
 
-// Crear instancia de la aplicación Express
+// Create Express app instance
 const app = express();
 
-// Configurar middlewares
+// Configure middlewares
 app.use(bodyParser.json());
-app.use(cors());
 
+app.use(cors({
+  origin: 'http://localhost:5173', // Allow only requests from this origin
+}));
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Define routes
 app.use('/api/auth', authRoutes);
-
-// // Ejemplo de rutas protegidas
-// app.get('/api/user/dashboard', authMiddleware, (req, res) => {
-//   res.json({ message: 'Bienvenido al dashboard de usuario' });
-// });
-
-// app.get('/api/admin/dashboard', authMiddleware, adminMiddleware, (req, res) => {
-//   res.json({ message: 'Bienvenido al dashboard de administrador' });
-// });
-
 app.use('/api/pantallas', pantallasRoutes);
 app.use('/api/impactos', impactosRoutes);
 app.use('/api/campanas', misCampanasRoutes);
@@ -39,7 +39,7 @@ app.use('/api/crearCampana', crearCampanaRoutes);
 app.use('/api/adminCrearUsuarios', adminCrearUsuariosRoutes);
 app.use('/api/adminGestionPantallas', adminGestionPantallas);
 
-// Conectar a la base de datos y manejar errores
+// Connect to the database and handle errors
 db.getConnection()
   .then(connection => {
     console.log('Conectado a la base de datos MySQL');
@@ -49,8 +49,8 @@ db.getConnection()
     console.error('Error al conectar a la base de datos:', err);
   });
 
-// Iniciar el servidor
-const PORT = config.PORT;
+// Start the server
+const PORT = config.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

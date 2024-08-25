@@ -99,6 +99,18 @@ function CrearCampanas() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
 
+  function resetForm() {
+    setPantallaSeleccionada(null);
+    setFechaInicio(null);
+    setFechaFin(null);
+    setDays(Array(7).fill(-1));
+    setSelectedHours([]);
+    setFiles(null);
+    setNombreCampana("");
+    setDateRangeSelectorKey(Date.now());
+  }
+  
+
   function calculatebudget() {
     if (!pantallaSeleccionada || !fechaInicio || !fechaFin || !days || !selectedHours) {
 
@@ -135,7 +147,6 @@ function CrearCampanas() {
   }
 
   function solicitarFechas() {
-
     if (!validParameters(pantallaSeleccionada, fechaInicio, fechaFin, days, selectedHours, files)) {
 
       return;
@@ -202,48 +213,97 @@ function CrearCampanas() {
   };
 
   const calculateCotizacion = (availableSpots) => {
-    return availableSpots * 100;
+    return availableSpots * pantallaSeleccionada.costoHora;
   };
 
-  async function handleUpload() {
-    // Checa los parametros incluyendo nombre campana
-
-    if (files.length === 0) {
-      alert("Por favor, selecciona al menos un archivo.");
+  async function handleCreateCampana() {
+    if (nombreCampana === "") {
+      alert("Escribe el nombre de tu campaña");
+      return;
+    }
+    // Chequea que todos los parámetros estén presentes
+    if (!validParameters(pantallaSeleccionada, fechaInicio, fechaFin, days, selectedHours, files)) {
       return;
     }
   
     const formData = new FormData();
     
-    // Añadir cada archivo al FormData
-    files.forEach((file, index) => {
-      formData.append(`file${index}`, file);
-    });
+    // Añadir el archivo al FormData
+    formData.append('image', files[0]);
   
-    // Añadir otros datos necesarios
-    formData.append('pantallaId', pantallaSeleccionada.id);
-    formData.append('fechaInicio', fechaInicio.toISOString());
-    formData.append('fechaFin', fechaFin.toISOString());
-    formData.append('dias', JSON.stringify(days));
-    formData.append('horas', JSON.stringify(selectedHours));
+    const fecha_inicio = formatDate(fechaInicio);
+    const fecha_fin = formatDate(fechaFin);
   
-    // Imprimir el contenido del FormData en la consola
-    console.log("Datos que se enviarían al backend:");
-    for (let [key, value] of formData.entries()) {
-      if (value instanceof File) {
-        console.log(key, ':', {
-          name: value.name,
-          type: value.type,
-          size: value.size + ' bytes'
-        });
-      } else {
-        console.log(key, ':', value);
+    // Obtener los días únicos "1,3,4"
+    let uniqueDays = "";
+    const set = new Set();
+  
+    for (let d = new Date(fechaInicio); d <= fechaFin; d.setDate(d.getDate() + 1)) {
+      let daysOfWeek = d.getDay(); 
+      daysOfWeek = (daysOfWeek === 0 ? 6 : daysOfWeek - 1); // Ajustar para que Lunes sea 0
+  
+      if (days[daysOfWeek] === 1) {
+        set.add(daysOfWeek + 1);
       }
     }
   
-    // Aquí iría la lógica real de envío al backend cuando esté implementada
-    console.log("Simulando envío al backend...");
-  }
+    for (let day of set) {
+      if (day === 7) {
+        uniqueDays += 1;
+      } else {
+        uniqueDays += `${day + 1},`;
+      }
+    }
+  
+    uniqueDays = uniqueDays.substring(0, uniqueDays.length - 1);
+  
+    // Transformar las horas en el formato correcto
+    let formatedHours = "";
+  
+    for (let hour of selectedHours) {
+      formatedHours += `${hour.substring(0, 2)},`;
+    }
+  
+    formatedHours = formatedHours.substring(0, formatedHours.length - 1);
+  
+    // Añadir otros datos necesarios
+    formData.append('id_pantalla', pantallaSeleccionada.id_pantalla);
+    formData.append('fecha_inicio', fecha_inicio);
+    formData.append('fecha_fin', fecha_fin);
+    formData.append('weekdays', uniqueDays);
+    formData.append('horas', formatedHours);
+    formData.append('nombre_campana', nombreCampana);
+    formData.append('estatus', 1); // Estatus por defecto
+    formData.append('costo', calculateCotizacion(calculateAvailableSpots(modalData.disponibilidad))); // Calcula el costo usando la función existente
+    
+    try {
+      // Obtén el token del localStorage
+      const token = localStorage.getItem('token');
+  
+      // Configurar el encabezado Authorization con el token
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/crearCampana/crearCampana`, 
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}` // Agrega el token al encabezado
+          }
+        }
+      );
+  
+      if (response.status === 200) {
+        alert('Campaña creada con éxito.');
+        setIsModalOpen(false);
+        resetForm();
+      } else {
+        alert('Error al crear la campaña.');
+      }
+    } catch (error) {
+      console.error('Error al crear la campaña:', error);
+      alert('Ocurrió un error al intentar crear la campaña.');
+    }
+  }  
 
   function toggleDay(index) {
     const newDays = [...days];
@@ -406,7 +466,7 @@ function CrearCampanas() {
           </div>
           
           <div className="modal-footer">
-            <button className="modal-button" onClick={() => console.log('Agregar funcionalidad aquí')}>
+            <button className="modal-button" onClick={handleCreateCampana}>
               Crear campaña
             </button>
           </div>

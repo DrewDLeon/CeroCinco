@@ -50,13 +50,13 @@ const crearCampanaController = {
             });
         }
     },
-    
 
     createCampana: async function(req, res) {
+      console.log('Crear campana');
       try {
-          console.log(req.body)
+          const id_usuario = req.user.userId;
           //IMAGEN PRIMERO    
-          console.log(req.file)
+          console.log(req.file);
           const buffer = req.file.buffer;
           const filename = `${Date.now()}-${req.file.originalname}`;
           const filePath = path.join(__dirname, '../uploads', filename);
@@ -68,7 +68,7 @@ const crearCampanaController = {
           console.log("Imagen procesada correctamente");
 
           //Revisar si la campaña ya existe
-          const {id_usuario, fecha_inicio, fecha_fin, weekdays, horas, estatus, nombre_campana, costo, id_pantalla} = req.body
+          const {fecha_inicio, fecha_fin, weekdays, horas, estatus, nombre_campana, costo, id_pantalla} = req.body;
           
           const campana = await tbl_campanas.getCampana(id_usuario, id_pantalla, nombre_campana);
 
@@ -119,8 +119,6 @@ const crearCampanaController = {
               message: 'Error'
             });
         }
-
-      
     }
   };
   
