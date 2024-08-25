@@ -13,27 +13,14 @@ const tbl_reservaciones = {
       VALUES
       (?, ?, ?, ?, ?);
     `;
-  console.log("Iniciando createDisponibilidad");
-  console.log("Datos recibidos:", { id_campana, id_pantalla, disponibilidad });
 
   try {
     const results = await Promise.all(disponibilidad.map(async (item, index) => {
-      // Crear la consulta con los valores reales para depuración
-      // const debugQuery = query.replace(/\?/g, (match) => {
-      //   if (match === '?') return JSON.stringify([id_campana, id_pantalla, item.fecha, item.hora, item.estatus].shift());
-      // });
-      
-      // console.log(`Consulta ${index + 1}:`, debugQuery);
-      
       // Ejecutar la consulta real
-      const result = await db.query(query, [id_campana, id_pantalla, item.fecha, item.hora, item.estatus]);
-      
-      // console.log(`Resultado de la consulta ${index + 1}:`, result);
+      const result = await db.query(query, [id_campana, id_pantalla, item.fecha, item.hora, item.estatus + 1]);
       
       return result;
     }));
-    
-    console.log("Todas las consultas completadas. Resultados:", results);
     return results;
   } catch (error) {
     console.error('Error insertando disponibilidad:', error);

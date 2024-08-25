@@ -54,9 +54,9 @@ const crearCampanaController = {
 
     createCampana: async function(req, res) {
       try {
-          console.log(req.body)
+          //console.log(req.body)
           //IMAGEN PRIMERO    
-          console.log(req.file)
+          //console.log(req.file)
           const buffer = req.file.buffer;
           const filename = `${Date.now()}-${req.file.originalname}`;
           const filePath = path.join(__dirname, '../uploads', filename);
@@ -95,30 +95,24 @@ const crearCampanaController = {
           let id_campana = await tbl_campanas.getCampana(id_usuario, id_pantalla, nombre_campana);
           id_campana = id_campana.id_campaña
 
-          console.log(id_campana)
-          console.log(id_pantalla)
-          console.log(disponibilidadChanged)
+          const disponibilidadFiltrada = disponibilidadChanged.filter(item => item.estatus === 0);
 
           // INSERTAR RESERVACIONES EN LA BASE DE DATOS
           try {
-            console.log("Reservacion creada");
-            const reservaciones = await tbl_reservaciones.createReservaciones(id_campana, id_pantalla, disponibilidadChanged);
-            console.log("Reservacion creada")
-            if (reservaciones) {
-              console.log("Reservacion creada")
+            const reservaciones = await tbl_reservaciones.createReservaciones(id_campana, id_pantalla, disponibilidadFiltrada);
+            if (reservaciones && reservaciones.length > 0) {
+              console.log("Reservaciones creadas");
+              res.status(200).json({ message: 'Campaña y reservaciones creadas con éxito' });
+            } else {
+              console.log("No se crearon reservaciones");
+              res.status(200).json({ message: 'Campaña creada, pero no se generaron reservaciones' });
             }
-            res.status(200);
           } catch (error) {
-            res.status(405).send({
-              message: 'Error en insertar las reservaciones'
-            })
+            console.error('Error al crear reservaciones:', error);
+            res.status(500).json({
+              message: 'Error al insertar las reservaciones'
+            });
           }
-          
-
-          
-
-
-
 
         } catch (error){
             res.status(400).send({
