@@ -4,5 +4,7 @@ const adminCrearUsuariosController = require('../controllers/adminCrearUsuariosC
 
 router.post('/', adminCrearUsuariosController.createUser);
 router.get('/', adminCrearUsuariosController.getAll);
+router.put('/:id', adminCrearUsuariosController.updateUser); 
+router.delete('/:id', adminCrearUsuariosController.deleteUser);
 
 module.exports = router;

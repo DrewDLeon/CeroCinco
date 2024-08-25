@@ -37,6 +37,31 @@ function AdminGestionPantallas() {
         setSelectedPantalla(null);
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+        if (!selectedPantalla) return;
+
+        try {
+            const url = `${import.meta.env.VITE_API_URL}/api/adminGestionPantallas/update/${selectedPantalla.id_pantalla}`;
+            await axios.put(url, selectedPantalla);
+            
+            // Actualizar la lista de pantallas localmente después de una actualización exitosa
+            setPantallas(pantallas.map(pantalla =>
+                pantalla.id_pantalla === selectedPantalla.id_pantalla ? selectedPantalla : pantalla
+            ));
+
+            alert('Los cambios se han guardado exitosamente.');
+            setSelectedPantalla(null); // Deseleccionar la pantalla después de guardar
+
+        } catch (error) {
+            console.error('Error actualizando la pantalla:', error);
+            alert('Ocurrió un error al intentar guardar los cambios.');
+        }
+    };
+
+    console.log(selectedPantalla);
+
     return (
         <div className="gestion-campanas-container">
             <div className="pantallas-list">
@@ -57,7 +82,7 @@ function AdminGestionPantallas() {
                 {selectedPantalla ? (
                     <>
                         <h2 className="pantalla-details-title">Editar Pantalla: {selectedPantalla.nombre_pantalla}</h2>
-                        <form className="pantalla-details-form">
+                        <form className="pantalla-details-form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label className="form-group-label">Nombre de Pantalla</label>
                                 <input

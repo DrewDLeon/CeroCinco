@@ -54,14 +54,19 @@ function AdminGestionUsuarios() {
     };
 
     const handleDeleteClick = async (userId) => {
-        try {
-            const url = `${import.meta.env.VITE_API_URL}/api/adminCrearUsuarios/${userId}`;
-            await axios.delete(url);
-            setUsers(users.filter(user => user.id_usuario !== userId));
-        } catch (error) {
-            console.log("Error eliminando el usuario " + error);
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
+    
+        if (confirmDelete) {
+            try {
+                const url = `${import.meta.env.VITE_API_URL}/api/adminCrearUsuarios/${userId}`;
+                await axios.delete(url);
+                setUsers(users.filter(user => user.id_usuario !== userId));
+            } catch (error) {
+                console.log("Error eliminando el usuario " + error);
+            }
         }
     };
+    
 
     const filteredUsers = users.filter(user => {
         return (

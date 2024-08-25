@@ -31,6 +31,47 @@ const adminCrearUsuariosController =  {
     } catch (error) {
       res.status(500).json({message: "Error recolectando usuarios"})
     }
+  },
+  updateUser: async (req, res) => {  // Nueva función para actualizar un usuario
+    const userId = req.params.id;
+    const { usuario, contra, admin } = req.body;
+
+    if (!usuario || !contra || admin === undefined) {
+      return res.status(400).json({ message: "Usuario, contraseña, y rol son requeridos." });
+    }
+
+    try {
+      const user = await tbl_usuarios.findUserById(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado.' });
+      }
+
+      await tbl_usuarios.updateUser(userId, usuario, contra, admin);
+      res.status(200).json({ message: 'Usuario actualizado exitosamente.' });
+
+    } catch (error) {
+      console.error('Error actualizando usuario:', error);
+      res.status(500).json({ message: "Error actualizando usuario." });
+    }
+  },
+  deleteUser: async (req, res) => { // Nueva función para eliminar un usuario
+    const userId = req.params.id;
+
+    try {
+      const user = await tbl_usuarios.findUserById(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado.' });
+      }
+
+      await tbl_usuarios.deleteUser(userId);
+      res.status(200).json({ message: 'Usuario eliminado exitosamente.' });
+
+    } catch (error) {
+      console.error('Error eliminando usuario:', error);
+      res.status(500).json({ message: "Error eliminando usuario." });
+    }
   }
 }
 
