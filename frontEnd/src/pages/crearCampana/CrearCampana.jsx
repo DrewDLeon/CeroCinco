@@ -100,9 +100,6 @@ function CrearCampanas() {
   const [modalData, setModalData] = useState(null);
 
   function resetForm() {
-    setPantallaSeleccionada(null);
-    setFechaInicio(null);
-    setFechaFin(null);
     setDays(Array(7).fill(-1));
     setSelectedHours([]);
     setFiles(null);
@@ -295,7 +292,6 @@ function CrearCampanas() {
       if (response.status === 200) {
         alert('Campaña creada con éxito.');
         setIsModalOpen(false);
-        resetForm();
       } else {
         alert('Error al crear la campaña.');
       }
