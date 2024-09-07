@@ -85,6 +85,49 @@ function formatDate(date) {
   return `${year}-${month}-${day}`;
 }
 
+function getUniqueDays(fechaInicio, fechaFin, days) {
+    // Obtener los días únicos en el formato necesario "1,3,4".
+    // El backend espera los días en el siguiente formato:
+    // 1 = domingo, 2 = lunes, ..., 7 = sábado.
+    let uniqueDays = "";
+    const set = new Set();
+
+    // El método getDay() de JavaScript devuelve los días de la semana en este formato:
+    // 0 = domingo, 1 = lunes, ..., 6 = sábado.
+    // Sin embargo, en nuestra variable 'days', los días están representados de la siguiente manera:
+    // 0 = lunes, 1 = martes, ..., 6 = domingo.
+    // En consecuencia, ajustamos la conversión de los valores para que coincidan con el formato de 'days'.
+
+    for (let d = new Date(fechaInicio); d <= fechaFin; d.setDate(d.getDate() + 1)) {
+      // Usamos getDay() para obtener el día de la semana actual, donde 0 = domingo y 6 = sábado.
+      let daysOfWeek = d.getDay(); 
+      
+      // Convertimos el valor devuelto por getDay() para que 0 = lunes y 6 = domingo:
+      // Si getDay() devuelve 0 (domingo), lo cambiamos a 6 para alinearlo con 'days'.
+      // De lo contrario, restamos 1 para que lunes sea 0.
+      daysOfWeek = (daysOfWeek === 0 ? 6 : daysOfWeek - 1); 
+      
+      // Si el día en 'days' es marcado como seleccionado (con valor 1), lo añadimos al conjunto (set).
+      if (days[daysOfWeek] === 1) {
+        set.add(daysOfWeek);
+      }
+    }
+
+    // Recorremos los días únicos en el set y los ajustamos para el formato requerido por el backend.
+    // En el backend, el valor de domingo debe ser 1, así que lo cambiamos de 6 a 1.
+    // Para los demás días, simplemente sumamos 2 al valor actual para obtener el formato correcto.
+    for (let day of set) {
+      if (day === 6) {
+        uniqueDays += "1,";  // Domingo pasa a ser 1.
+      } else {
+        uniqueDays += `${day + 2},`;  // Para los demás días sumamos 2 para ajustar el formato.
+      }
+    }
+  
+    
+    return uniqueDays = uniqueDays.substring(0, uniqueDays.length - 1);
+}
+
 function CrearCampanas() {
   const [pantallas, setPantallas] = useState([]);
   const [pantallaSeleccionada, setPantallaSeleccionada] = useState(null);
@@ -153,35 +196,12 @@ function CrearCampanas() {
 
     const fin = formatDate(fechaFin);
 
-    // Getting the uique days to "1,3,4"
-    let uniqueDays = "";
-    const set = new Set();
-
-    for (let d = new Date(fechaInicio); d <= fechaFin; d.setDate(d.getDate() + 1)) {
-      let daysOfWeek = d.getDay(); 
-      daysOfWeek = (daysOfWeek === 0 ? 6 : daysOfWeek - 1); // Ajustar para que Lunes sea 0
-  
-      if (days[daysOfWeek] === 1) {
-        set.add(daysOfWeek + 1);
-      }
-    }
-
-    for (let day of set) {
-      if (day === 7) {
-        uniqueDays += 1
-
-      } else {
-        uniqueDays += `${day + 1},`;
-      }
-    }
-
-    uniqueDays = uniqueDays.substring(0, uniqueDays.length - 1);
+    const uniqueDays = getUniqueDays(fechaInicio, fechaFin, days);
 
     // Tranforming hours into the right format
     let formatedHours = "";
 
     for (let hour of selectedHours) {
-      console.log(typeof(hour));
       formatedHours += `${hour.substring(0, 2)},`;
     }
 
@@ -194,7 +214,6 @@ function CrearCampanas() {
       .then(response => {
         setModalData(response.data); // Store the response data
         setIsModalOpen(true); // Open the modal
-        console.log('Response:', response.data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -225,34 +244,12 @@ function CrearCampanas() {
   
     const formData = new FormData();
     
-    // Añadir el archivo al FormData
     formData.append('image', files[0]);
   
     const fecha_inicio = formatDate(fechaInicio);
     const fecha_fin = formatDate(fechaFin);
   
-    // Obtener los días únicos "1,3,4"
-    let uniqueDays = "";
-    const set = new Set();
-  
-    for (let d = new Date(fechaInicio); d <= fechaFin; d.setDate(d.getDate() + 1)) {
-      let daysOfWeek = d.getDay(); 
-      daysOfWeek = (daysOfWeek === 0 ? 6 : daysOfWeek - 1); // Ajustar para que Lunes sea 0
-  
-      if (days[daysOfWeek] === 1) {
-        set.add(daysOfWeek + 1);
-      }
-    }
-  
-    for (let day of set) {
-      if (day === 7) {
-        uniqueDays += 1;
-      } else {
-        uniqueDays += `${day + 1},`;
-      }
-    }
-  
-    uniqueDays = uniqueDays.substring(0, uniqueDays.length - 1);
+    const uniqueDays = getUniqueDays(fechaInicio, fechaFin, days);
   
     // Transformar las horas en el formato correcto
     let formatedHours = "";
@@ -345,7 +342,6 @@ function CrearCampanas() {
     }
 
     setDateRangeSelectorKey(Date.now());
-    console.log(dateRangeSelectorKey);
     fetchPantallasData();
   }, [])
 
@@ -356,9 +352,6 @@ function CrearCampanas() {
   const availableHours = pantallaSeleccionada ? generateTimeSlots(pantallaSeleccionada.hora_inicio, pantallaSeleccionada.hora_fin) : [];
 
   const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-
-  console.log(fechaInicio);
-  console.log(fechaFin);
 
   return (
     <>
