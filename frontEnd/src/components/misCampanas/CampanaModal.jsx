@@ -1,15 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useTable } from 'react-table';
-import Panel220Photo from '../../assets/paneles/panel220.png';
-import Panel302Photo from '../../assets/paneles/panel302.jpg';
-import Panel410Photo from '../../assets/paneles/panel410.jpg';
+import html2pdf from 'html2pdf.js';
 
 import './CampanaModal.css';
-const formatHour = (hour) => {
-  const period = hour < 12 ? 'AM' : 'PM';
-  const formattedHour = hour % 12 || 12;
-  return `${formattedHour} ${period}`;
-};
 
 function formatDate(dateString) {
   const date = new Date(dateString);
@@ -19,6 +12,14 @@ function formatDate(dateString) {
     return 'Invalid date';
   }
 }
+
+const formatHour = (hour) => {
+  return `${hour.toString().padStart(2, '0')}:00`;
+};
+
+const parseHour = (timeString) => {
+  return parseInt(timeString.split(':')[0], 10);
+};
 
 function translateStatus(status) {
   if (status === 0) {
@@ -51,18 +52,7 @@ function translateStatus(status) {
 function CampanaModal({ isOpen, onClose, campana, status }) {
   const [horarios, setHorarios] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  let currentPanelPhoto;
-
-  if (campana.id_pantalla === 1) {
-    currentPanelPhoto = Panel220Photo;
-  } else if (campana.id_pantalla === 2) {
-    currentPanelPhoto = Panel302Photo;
-  } else if (campana.id_pantalla === 3) {
-    currentPanelPhoto = Panel410Photo;
-  } else {
-    currentPanelPhoto = Panel220Photo;
-  }
+  const imageUrl = `${import.meta.env.VITE_API_URL}/uploads/${campana.ruta_arte}`;
 
   useEffect(() => {
     const fetchHorarios = async () => {
@@ -93,14 +83,6 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
   }, [isOpen, campana.id_campaña]);
 
   const daysOfWeek = useMemo(() => ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'], []);
-
-  const formatHour = (hour) => {
-    return `${hour.toString().padStart(2, '0')}:00`;
-  };
-
-  const parseHour = (timeString) => {
-    return parseInt(timeString.split(':')[0], 10);
-  };
 
   const data = useMemo(() => {
     const startHour = parseHour(campana.hora_inicio);
@@ -141,8 +123,19 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
     return null;
   }
 
-  console.log(campana);
-  const imageUrl = `${import.meta.env.VITE_API_URL}/uploads/${campana.ruta_arte}`;
+  function handleDownload() {
+    const element = document.querySelector('.modal-capture');
+    
+    const options = {
+      margin: [10, 10, 10, 10],
+      filename: `comprobante ${campana.nombre_pantalla}.pdf`,
+      image: { type: 'jpeg', quality: 0.20 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().from(element).set(options).save();
+  }
 
   return (
     <div className="modal-overlay">
@@ -151,18 +144,21 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div>
-            <h2>{campana.nombre_campaña}</h2>
+          <div className='modal-capture'>
+            <h2 style={{ fontFamily: 'Montserrat, sans-serif' }}>{campana.nombre_campaña}</h2>
             <div className="modal-info">
               <img src={imageUrl} alt="imagen de panel" className='campaña-panel-image'/>
               <div className="modal-text-data">
-                <p><b>Pantalla:</b> {campana.nombre_pantalla}</p>
-                <p><b>Referencia pago:</b> {campana.id_campaña}</p>
-                <p><b>Precio:</b> {campana.costo}</p>
-                <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
-                <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
-                <p><b>Fecha de Fin:</b> {formatDate(campana.fecha_fin)}</p>
-                <p><b>Estado:</b> {translateStatus(campana.estatus)}</p>
+                <div>
+                  <p><b>Pantalla:</b> {campana.nombre_pantalla}</p>
+                  <p><b>Referencia pago:</b> {campana.id_campaña}</p>
+                  <p><b>Precio: </b>${campana.costo}</p>
+                  <p><b>Dirección de Pantalla:</b> {campana.direccion_pantalla}</p>
+                  <p><b>Fecha de Inicio:</b> {formatDate(campana.fecha_inicio)}</p>
+                  <p><b>Fecha de Fin:</b> {formatDate(campana.fecha_fin)}</p>
+                  <p><b>Estado:</b> {translateStatus(campana.estatus)}</p>
+                </div>
+                <button className='campana-modal-download-ticket-button' onClick={handleDownload}>Descargar comprobante</button>
               </div>
             </div>
 
@@ -191,22 +187,22 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
                 </tbody>
               </table>
             </div>
-            <div class="">
-              <h2>Cómo Pagar Mi Campaña</h2>
-              <h3>Paso 1</h3>
+            <div>
+              <h2 style={{ fontFamily: 'Montserrat, sans-serif' }}>Cómo Pagar Mi Campaña</h2>
+              <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 1</h3>
               <p>Para realizar el pago de tu campaña, sigue los siguientes pasos:</p>
-              <div class="">
-                <p>Realiza una transferencia bancaria de <span class="">$$$$</span> a la cuenta:</p>
-                <p class="">XXXXXXXXXXXX</p>
-              </div>
-              <h3>Paso 2</h3>
               <div>
-                <p>En concepto escribe tu numero de referencia: XXXXXXX</p>
+                <p>Realiza una transferencia bancaria de <span>{campana.costo} pesos </span> a la cuenta:</p>
+                <p>XXXXXXXXXXXX</p>
               </div>
-              <h3>Paso 3</h3>
-              <p>Una vez realizada la transferencia, envía el comprobante de pago a nuestro correo electrónico <span class="highlight">pagos@tuempresa.com</span> para validar tu transacción.</p>
+              <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 2</h3>
+              <div>
+                <p>En concepto escribe tu numero de referencia: "{campana.id_campaña}"</p>
+              </div>
+              <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 3</h3>
+              <p>Una vez realizada la transferencia, envía el comprobante de pago a nuestro correo electrónico <span>pagos@tuempresa.com</span> para validar tu transacción.</p>
               <p>Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
-          </div>
+            </div>
           </div>
         )}
       </div>

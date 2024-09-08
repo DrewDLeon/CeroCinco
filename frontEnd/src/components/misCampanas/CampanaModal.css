@@ -61,7 +61,27 @@
   border-radius: 5px;
 }
 
-.schedule-table {
+.modal-info {
+  display: flex;
+  height: 100%; /* Asegura que el contenedor ocupe toda la altura disponible */
+}
+
+.modal-text-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el contenido del texto y el botón */
+  padding: 0px 10px;
+  height: 100%; /* Hace que la altura sea del 100% */
+}
+
+.campana-modal-download-ticket-button {
+  width: 100%;
+  height: auto; /* Deja que el botón tome la altura que necesite */
+  font-size: 22px;
+  border-radius: 15px;
+} 
+
+.schedule-table { 
   margin-top: 20px;
   overflow-x: auto;
 }
@@ -95,17 +115,4 @@
 
 .circle.filled {
   background-color: #4caf50;
-}
-
-.modal-info {
-  display: flex;
-  margin-top: 10px;
-}
-
-.modal-text-data{
-  padding: 10px;
-}
-
-.modal-text-data p{
-  margin: 5px;
 }
