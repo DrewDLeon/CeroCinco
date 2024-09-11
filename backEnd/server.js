@@ -23,7 +23,11 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
+<<<<<<< HEAD
   origin: '*', // Allow only requests from this origin
+=======
+  origin: 'https://cero-cinco.vercel.app/', // Allow only requests from this origin
+>>>>>>> 0ba6068201d27292be80a6b738a2477fe8321d79
 }));
 
 // Serve static files from the 'uploads' directory
