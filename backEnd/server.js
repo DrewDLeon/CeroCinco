@@ -23,7 +23,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow only requests from this origin
+  origin: '*', // Allow only requests from this origin
 }));
 
 // Serve static files from the 'uploads' directory
