@@ -5,6 +5,8 @@ const cors = require('cors');
 const db = require('./config/db');
 const config = require('./config/config');
 const path = require('path');
+const https = require('https');
+const fs = require('fs');
 
 // Importing route modules
 const authRoutes = require('./routes/authRoutes');
@@ -23,11 +25,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-<<<<<<< HEAD
   origin: '*', // Allow only requests from this origin
-=======
-  origin: 'https://cero-cinco.vercel.app/', // Allow only requests from this origin
->>>>>>> 0ba6068201d27292be80a6b738a2477fe8321d79
 }));
 
 // Serve static files from the 'uploads' directory
@@ -53,8 +51,23 @@ db.getConnection()
     console.error('Error al conectar a la base de datos:', err);
   });
 
-// Start the server
+// HTTPS options
+const httpsOptions = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/167-172-145-139.nip.io/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/167-172-145-139.nip.io/privkey.pem')
+};
+
+// Create HTTPS server
 const PORT = config.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+https.createServer(httpsOptions, app).listen(PORT, () => {
+  console.log(`Servidor HTTPS corriendo en el puerto ${PORT}`);
+});
+
+// Optional: Redirect HTTP to HTTPS
+const http = require('http');
+http.createServer((req, res) => {
+  res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+  res.end();
+}).listen(80, () => {
+  console.log('Servidor HTTP redirigiendo a HTTPS en el puerto 80');
 });
