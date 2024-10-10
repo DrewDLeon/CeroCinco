@@ -189,19 +189,21 @@ function CampanaModal({ isOpen, onClose, campana, status }) {
             </div>
             <div>
               <h2 style={{ fontFamily: 'Montserrat, sans-serif' }}>Cómo Pagar Mi Campaña</h2>
+
               <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 1</h3>
-              <p>Para realizar el pago de tu campaña, sigue los siguientes pasos:</p>
+              <p>Realiza una transferencia bancaria de <span>{campana.costo} pesos</span> a la siguiente cuenta:</p>
               <div>
-                <p>Realiza una transferencia bancaria de <span>{campana.costo} pesos </span> a la cuenta:</p>
-                <p>XXXXXXXXXXXX</p>
+                <p><strong>Banco:</strong> BBVA</p>
+                <p><strong>Número de cuenta:</strong> 0116391362</p>
+                <p><strong>CLABE:</strong> 012580001163913622</p>
               </div>
+
               <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 2</h3>
-              <div>
-                <p>En concepto escribe tu numero de referencia: "{campana.id_campaña}"</p>
-              </div>
+              <p>En el concepto de la transferencia, escribe tu número de referencia: "{campana.id_campaña}".</p>
+
               <h3 style={{ fontFamily: 'Montserrat, sans-serif' }}>Paso 3</h3>
-              <p>Una vez realizada la transferencia, envía el comprobante de pago a nuestro correo electrónico <span>pagos@tuempresa.com</span> para validar tu transacción.</p>
-              <p>Si tienes alguna duda o necesitas asistencia, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
+              <p>Envía el comprobante de pago a <span>hola@cerocinco.media</span> para validar tu transacción.</p>
+              <p>Si necesitas ayuda, no dudes en contactarnos a través de nuestro servicio de atención al cliente.</p>
             </div>
           </div>
         )}
